@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/05 18:08:19 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:00:52 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ typedef struct	s_filler
 }				t_filler;
 
 void	ft_panic(char *error);
-void read_player_info(t_filler *filler, char *line);
+void read_player_info(t_filler *filler, int n);
 
 #endif

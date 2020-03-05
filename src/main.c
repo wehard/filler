@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/05 19:32:25 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:12:08 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "ft_printf.h"
 #include "vector.h"
 #include "debug.h"
+#include <unistd.h>
+#include <fcntl.h>
 
 #define FD 0
 
@@ -104,32 +106,36 @@ int	main(void)
 	t_piece *piece;
 	t_filler *filler;
 
-	debug_log("----------\n");
+
 	filler = (t_filler*)malloc(sizeof(t_filler));
 	filler->map = NULL;
 	piece = NULL;
 
 	char *line;
+	debug_log("----------");
 	while (ft_get_next_line(FD, &line))
 	{
 		debug_log(line);
-		if (ft_strncmp(line, "$$$", 3) == 0)
-			read_player_info(filler, line);
-		if (ft_strncmp(line, "Plateau", 7) == 0)
-		{
-			if (filler->map == NULL)
-			{
-				char **split = ft_strsplit(line, ' ');
-				filler->map = create_map(ft_atoi(split[2]), ft_atoi(split[1]));
-			}
-			read_map_state(filler->map);
-		}
-		if (ft_strncmp(line, "Piece", 5) == 0)
-		{
-			char **split = ft_strsplit(line, ' ');
-			piece = read_piece(ft_atoi(split[2]), ft_atoi(split[1]));
-			debug_log("8 2\n");
-		}
+		// if (ft_strncmp(line, "$$$", 3) == 0)
+		// {
+		// 	read_player_info(filler, ft_atoi(line + 10));
+		// }
+		// else if (ft_strncmp(line, "Plateau", 7) == 0)
+		// {
+		// 	if (filler->map == NULL)
+		// 	{
+		// 		char **split = ft_strsplit(line, ' ');
+		// 		filler->map = create_map(ft_atoi(split[2]), ft_atoi(split[1]));
+		// 	}
+		// 	read_map_state(filler->map);
+		// }
+		// else if (ft_strncmp(line, "Piece", 5) == 0)
+		// {
+		// 	debug_log("checking piece\n");
+		// 	char **split = ft_strsplit(line, ' ');
+		// 	piece = read_piece(ft_atoi(split[2]), ft_atoi(split[1]));
+		// 	ft_putstr("8 2\n");
+		// }
 		free(line);
 	}
 	return (0);
