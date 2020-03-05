@@ -6,7 +6,7 @@
 #    By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/03/05 18:09:06 by wkorande         ###   ########.fr        #
+#    Updated: 2020/03/05 21:56:07 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c\
 	player.c\
-	debug.c
+	debug.c\
+	area.c\
+	map.c\
+	piece.c
 
 SRCDIR = src
 
