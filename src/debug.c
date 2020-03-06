@@ -6,15 +6,16 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:58:03 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/05 22:13:00 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:09:44 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include "debug.h"
 
-void debug_log(const char *str)
+void debug_log_fput(const char *str)
 {
 	FILE	*file;
 
@@ -24,18 +25,36 @@ void debug_log(const char *str)
 	fclose(file);
 }
 
+FILE	*g_file;
 
-void debug_log2(const char *format,...)
+void init_logger(char *filename, char *mode)
 {
-	va_list valist;
-	FILE	*file;
-
-	va_start(valist, format);
-	file = fopen("debug.log", "a");
-	vfprintf(file, format, valist);
-	fclose(file);
+	g_file = fopen(filename, mode);
+	debug_log("\033[0;36m### init logger ###\033[0m\n");
 }
 
+void close_logger(void)
+{
+	debug_log("\033[0;33m### closing logger ###\033[0m\n");
+	fclose(g_file);
+}
+
+void debug_log(const char *format,...)
+{
+	va_list valist;
+	//FILE	*file;
+
+	va_start(valist, format);
+	//file = fopen("debug.log", "a");
+	vfprintf(g_file, format, valist);
+	//fputc('\n', g_file);
+	//fclose(file);
+}
+
+void debug_log_char(const char c)
+{
+	fputc(c, g_file);
+}
 
 void print_area(char **area, int width, int height)
 {
@@ -48,10 +67,10 @@ void print_area(char **area, int width, int height)
 		c = 0;
 		while (c < width)
 		{
-			debug_log(&area[r][c]);
+			debug_log_char(area[r][c]);
 			c++;
 		}
-		debug_log("\n");
+		debug_log_char('\n');
 		r++;
 	}
 }

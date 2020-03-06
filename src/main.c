@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/05 23:06:48 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:11:36 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,16 @@ int	main(void)
 {
 	t_piece *piece;
 	t_filler *filler;
-	int first_run;
 
-	first_run = 1;
 	filler = (t_filler*)malloc(sizeof(t_filler));
 	filler->map = NULL;
 	piece = NULL;
 
 	char *line;
-	debug_log("----------");
+	init_logger("debug.log", "w");
 	while (ft_get_next_line(STDIN, &line))
 	{
-		debug_log(line);
+		//debug_log(line);
 		if (ft_strncmp(line, "$$$", 3) == 0)
 		{
 			read_player_info(filler, ft_atoi(line + 10));
@@ -56,23 +54,20 @@ int	main(void)
 		}
 		else if (ft_strncmp(line, "Piece", 5) == 0)
 		{
-			debug_log("checking piece\n");
 			char **split = ft_strsplit(line, ' ');
 			piece = read_piece(ft_atoi(split[2]), ft_atoi(split[1]));
 			if (piece != NULL)
 			{
 				t_vec2i p;
-				if (first_run)
-				{
-					p = get_decent_position(*filler->map, *piece);
-					first_run = 0;
-				}
-				else
-					p = get_decent_position(*filler->map, *piece);
+				p = get_decent_position(*filler->map, *piece);
+				debug_log("piece pos: r%d c%d\n", p.y, p.x);
 				ft_printf("%d %d\n", p.y, p.x);
 			}
+			else
+				break ;
 		}
 		free(line);
 	}
+	close_logger();
 	return (0);
 }

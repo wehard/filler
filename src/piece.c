@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/05 23:14:27 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:58:54 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_vec2i calc_top_left_corner(t_piece piece)
 		}
 		cur.y++;
 	}
-	// check errors
 	return (corner);
 }
 
@@ -55,8 +54,8 @@ t_piece *read_piece(int width, int height)
 	}
 	piece->data = make_area(piece->width, piece->height);
 	populate_area(piece->data, piece->width, piece->height, 0);
-	t_vec2i c = calc_top_left_corner(*piece);
-	debug_log2("corner: %d %d\n", c.x, c.y);
+	//t_vec2i c = calc_top_left_corner(*piece);
+	//debug_log("corner: %d %d", c.x, c.y);
 	return (piece);
 }
 

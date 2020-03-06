@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/05 23:13:20 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:11:22 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 # define STDIN 0
 # define ASTERISK '*'
+# define P1 'O'
+# define P2 'X'
 
 typedef struct	s_map
 {
