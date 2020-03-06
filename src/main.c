@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 18:34:23 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 19:40:38 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(void)
 	t_filler *filler;
 
 	filler = (t_filler*)malloc(sizeof(t_filler));
+	filler->player_start.x = -1;
+	filler->player_start.y = -1;
 	filler->map = NULL;
 	piece = NULL;
 
@@ -59,7 +61,7 @@ int	main(void)
 			if (piece != NULL)
 			{
 				t_vec2i p;
-				p = get_decent_position(*filler, *filler->map, *piece);
+				p = get_position(filler, *filler->map, *piece);
 				debug_log("piece pos: r%d c%d\n", p.y, p.x);
 				ft_printf("%d %d\n", p.y, p.x);
 			}

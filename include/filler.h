@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 18:33:58 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 19:40:12 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ typedef struct	s_player
 
 typedef struct	s_filler
 {
-	char	player;
-	char	opp;
+	char		player;
+	t_vec2i		player_start;
+	char		opp;
 	t_map		*map;
 }				t_filler;
 
@@ -60,6 +61,6 @@ t_map			*create_map(int width, int height);
 void			read_map_state(t_map *map);
 t_vec2i 		get_decent_position(t_filler filler, t_map map, t_piece piece);
 t_vec2i 		calc_piece_offset(t_piece piece);
-
+t_vec2i 		get_position(t_filler *filler, t_map map, t_piece piece);
 
 #endif
