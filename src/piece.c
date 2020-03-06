@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 13:58:54 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:40:22 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,100 @@
 #include "debug.h"
 #include <stdlib.h>
 
-t_vec2i calc_top_left_corner(t_piece piece)
+int left_offset(t_piece p)
 {
 	t_vec2i cur;
-	t_vec2i corner;
 
-	corner.x = 0;
-	corner.y = 0;
+	cur.x = 0;
+	while (cur.x < p.width)
+	{
+		cur.y = 0;
+		while (cur.y < p.height)
+		{
+			if (p.data[cur.y][cur.x] == ASTERISK)
+				return (cur.x);
+			cur.y++;
+		}
+		cur.x++;
+	}
+	return (0);
+}
+
+int right_offset(t_piece p)
+{
+	t_vec2i cur;
+
+	cur.x = p.width - 1;
+	while (cur.x >= 0)
+	{
+		cur.y = 0;
+		while (cur.y < p.height)
+		{
+			if (p.data[cur.y][cur.x] == ASTERISK)
+				return (p.width - cur.x - 1);
+			cur.y++;
+		}
+		cur.x--;
+	}
+	return (0);
+}
+
+int top_offset(t_piece p)
+{
+	t_vec2i cur;
+
 	cur.y = 0;
-	while (cur.y < piece.height)
+	while (cur.y < p.height)
 	{
 		cur.x = 0;
-		while (cur.x < piece.width)
+		while (cur.x < p.width)
 		{
-			if (piece.data[cur.y][cur.x] == ASTERISK)
-			{
-				corner = cur;
-				return (corner);
-			}
+			if (p.data[cur.y][cur.x] == ASTERISK)
+				return (cur.y);
 			cur.x++;
 		}
 		cur.y++;
 	}
-	return (corner);
+	return (0);
+}
+
+int bottom_offset(t_piece p)
+{
+	t_vec2i cur;
+
+	cur.y = p.height - 1;
+	while (cur.y >= 0)
+	{
+		cur.x = 0;
+		while (cur.x < p.width)
+		{
+			if (p.data[cur.y][cur.x] == ASTERISK)
+				return (p.height - cur.y - 1);
+			cur.x++;
+		}
+		cur.y--;
+	}
+	return (0);
+}
+
+t_vec2i calc_piece_min_offset(t_piece piece)
+{
+	t_vec2i offset;
+
+	offset.x = left_offset(piece);
+	offset.y = top_offset(piece);
+	debug_log("piece min offset: r%d c%d\n", offset.y, offset.x);
+	return (offset);
+}
+
+t_vec2i calc_piece_max_offset(t_piece piece)
+{
+	t_vec2i offset;
+
+	offset.x = right_offset(piece);
+	offset.y = bottom_offset(piece);
+	debug_log("piece max offset: r%d c%d\n", offset.y, offset.x);
+	return (offset);
 }
 
 t_piece *read_piece(int width, int height)
@@ -56,6 +127,8 @@ t_piece *read_piece(int width, int height)
 	populate_area(piece->data, piece->width, piece->height, 0);
 	//t_vec2i c = calc_top_left_corner(*piece);
 	//debug_log("corner: %d %d", c.x, c.y);
+	piece->min_offset = calc_piece_min_offset(*piece);
+	piece->max_offset = calc_piece_max_offset(*piece);
 	return (piece);
 }
 

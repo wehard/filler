@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:58:03 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 14:09:44 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:49:50 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ void print_area(char **area, int width, int height)
 	int r;
 	int c;
 
+	debug_log("    01234567890123456789\n");
 	r = 0;
 	while (r < height)
 	{
+		debug_log("%3d ", r);
 		c = 0;
 		while (c < width)
 		{

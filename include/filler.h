@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 14:11:22 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:33:58 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct	s_piece
 {
 	int			width;
 	int			height;
+	t_vec2i		min_offset;
+	t_vec2i		max_offset;
 	char		**data;
 }				t_piece;
 
@@ -43,7 +45,8 @@ typedef struct	s_player
 
 typedef struct	s_filler
 {
-	t_player	me;
+	char	player;
+	char	opp;
 	t_map		*map;
 }				t_filler;
 
@@ -55,8 +58,8 @@ void 			populate_area(char **area, int width, int height, int line_offset);
 
 t_map			*create_map(int width, int height);
 void			read_map_state(t_map *map);
-t_vec2i 		get_decent_position(t_map map, t_piece piece);
-t_vec2i 		calc_top_left_corner(t_piece piece);
+t_vec2i 		get_decent_position(t_filler filler, t_map map, t_piece piece);
+t_vec2i 		calc_piece_offset(t_piece piece);
 
 
 #endif

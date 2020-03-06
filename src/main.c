@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 14:11:36 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:34:23 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(void)
 			if (piece != NULL)
 			{
 				t_vec2i p;
-				p = get_decent_position(*filler->map, *piece);
+				p = get_decent_position(*filler, *filler->map, *piece);
 				debug_log("piece pos: r%d c%d\n", p.y, p.x);
 				ft_printf("%d %d\n", p.y, p.x);
 			}

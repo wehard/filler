@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 14:14:32 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:42:21 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,23 @@ t_vec2i get_opponent_dir(t_map map)
 	return pos;
 }
 
-int	test_piece(t_map map, t_piece piece, t_vec2i pos)
+int	test_piece(t_filler filler, t_map map, t_piece piece, t_vec2i pos)
 {
 	int num_overlap;
 	t_vec2i m;
 	t_vec2i p;
 
 	num_overlap = 0;
-
-	p.y = 0;
+	p.y = piece.min_offset.y;
 	m.y = pos.y;
-	while (m.y < pos.y + piece.height)
+	while (m.y < pos.y + piece.height - piece.max_offset.y && p.y < piece.height - piece.max_offset.y)
 	{
-		p.x = 0;
+		p.x = piece.min_offset.x;
 		m.x = pos.x;
-		while (m.x < pos.x + piece.width)
+		while (m.x < pos.x + piece.width - piece.max_offset.x && p.x < piece.width - piece.max_offset.x)
 		{
+			if (piece.data[p.y][p.x] == ASTERISK && map.data[m.y][m.x] == filler.opp)
+				return (0);
 			if (map.data[m.y][m.x] != '.' && piece.data[p.y][p.x] != '.')
 				num_overlap++;
 			p.x++;
@@ -90,24 +91,25 @@ int	test_piece(t_map map, t_piece piece, t_vec2i pos)
 		p.y++;
 		m.y++;
 	}
+	//debug_log("num overlap: %d\n", num_overlap);
 	return (num_overlap == 1);
 }
 
-t_vec2i get_decent_position(t_map map, t_piece piece)
+t_vec2i get_decent_position(t_filler filler, t_map map, t_piece piece)
 {
 	t_vec2i cur;
 
 	cur.y = 0;
-	while (cur.y < map.height)
+	while (cur.y < map.height - piece.height + piece.max_offset.y + 1)
 	{
 		cur.x = 0;
-		while (cur.x < map.width)
+		while (cur.x < map.width - piece.width + piece.max_offset.x + 1)
 		{
-			if (test_piece(map, piece, cur))
+			if (test_piece(filler, map, piece, cur))
 			{
-				t_vec2i c = calc_top_left_corner(piece);
-				cur.x -= c.x;
-				cur.y -= c.y;
+				debug_log("found pos\n");
+				cur.x -= piece.min_offset.x;
+				cur.y -= piece.min_offset.y;
 				return (cur);
 			}
 			cur.x++;
