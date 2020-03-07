@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/07 16:38:19 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:35:19 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,34 +194,46 @@ int	search_radius(t_filler *filler, t_piece piece, t_vec2 start_pos, int radius,
 	int leg_count;
 	t_vec2i cur;
 	t_vec2 opp_pos;
+	int r;
+
+	if (start_pos.x < 0 || start_pos.x > filler->map->width)
+		return (0);
+	if (start_pos.y < 0 || start_pos.y > filler->map->height)
+		return (0);
 
 	opp_pos = get_player_start(filler->opp, filler);
 
 	t_vec2 direction = ft_normalize_vec2(ft_sub_vec2(opp_pos, start_pos));
 	//debug_log("dir %.2f %.2f\n", direction.x, direction.y);
 
-	spread = 90;
+	spread = 45;
 	leg_count = 2;
-
-	filler->spider_angle = ft_rad_to_deg(tan(direction.y / direction.x)) - spread / leg_count;
+	r = 1;
+	filler->spider_angle = spread - ft_rad_to_deg(tan(direction.y / direction.x)) / leg_count;
 	//debug_log("angle %d\n", filler->spider_angle);
 	if (filler->spider_angle >= spread)
 		filler->spider_angle = ft_rad_to_deg(tan(direction.y / direction.x)) - spread / leg_count;
 
-	while (filler->spider_angle < spread)
+	while (r < radius)
 	{
-		cur.x = start_pos.x + cos(ft_deg_to_rad(filler->spider_angle)) * radius;
-		cur.y = start_pos.y + sin(ft_deg_to_rad(filler->spider_angle)) * radius;
-		if (cur.x > 0 && cur.x < filler->map->width - piece.width - piece.max_offset.x + 1 &&
-			cur.y > 0 && cur.y < filler->map->height - piece.height - piece.max_offset.y + 1)
+		while (filler->spider_angle < spread)
 		{
-			if (test_piece(filler, piece, cur))
+			cur.x = start_pos.x + cos(ft_deg_to_rad(filler->spider_angle)) * radius;
+			cur.y = start_pos.y + sin(ft_deg_to_rad(filler->spider_angle)) * radius;
+			if (cur.x > 0 && cur.x < filler->map->width - piece.width - piece.max_offset.x + 1 &&
+				cur.y > 0 && cur.y < filler->map->height - piece.height - piece.max_offset.y + 1)
 			{
-				*valid_pos = ft_make_vec2(cur.x, cur.y);
-				return (1);
+				if (test_piece(filler, piece, cur))
+				{
+					*valid_pos = ft_make_vec2(cur.x, cur.y);
+					return (1);
+				}
+				else
+					return (search_radius(filler, piece, ft_make_vec2(cur.x, cur.y), 20, valid_pos));
 			}
+			filler->spider_angle += spread;
 		}
-		filler->spider_angle += spread / leg_count;
+		r++;
 	}
 	return (0);
 }
@@ -234,16 +246,9 @@ t_vec2i spider_strategy(t_filler *filler, t_piece piece)
 
 	start_pos = get_player_start(filler->player, filler);
 	valid_pos = ft_make_vec2(0,0);
-	radius = 1;
-
-	while (radius < ft_max(filler->map->width, filler->map->height))
-	{
-		if (search_radius(filler, piece, start_pos, radius, &valid_pos))
-		{
-			return (ft_make_vec2i(valid_pos.x, valid_pos.y));
-		}
-		radius++;
-	}
+	radius = 20;
+	if (search_radius(filler, piece, start_pos, radius, &valid_pos))
+		return (ft_make_vec2i(valid_pos.x, valid_pos.y));
 	debug_log("fallback\n");
-	return(get_pos_fallback(filler, piece));
+	return (get_pos_fallback(filler, piece));
 }
