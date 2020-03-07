@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/07 15:01:03 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:54:57 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct	s_filler
 {
 	char		player;
 	int			player_start_set;
-	t_vec2i		player_start;
+	t_vec2		player_start;
 	char		opp;
-	t_vec2i		opp_start;
+	t_vec2		opp_start;
 	int			opp_start_set;
 	t_map		*map;
 	int			spider_angle;

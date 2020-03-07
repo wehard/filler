@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/07 15:18:06 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/07 16:21:12 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	main(void)
 
 	filler = (t_filler*)malloc(sizeof(t_filler));
 	filler->player_start_set = 0;
-	filler->player_start = ft_make_vec2i(-1, -1);
+	filler->player_start = ft_make_vec2(-1, -1);
 	filler->opp_start_set = 0;
-	filler->opp_start = ft_make_vec2i(-1, -1);
+	filler->opp_start = ft_make_vec2(-1, -1);
 	filler->spider_angle = 0;
 	filler->map = NULL;
 	piece = NULL;

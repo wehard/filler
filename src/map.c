@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/07 15:24:38 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/07 16:38:19 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	test_piece(t_filler *filler, t_piece piece, t_vec2i pos)
 	return (num_overlap == 1);
 }
 
-t_vec2i get_player_start(char player, t_filler *filler)
+t_vec2 get_player_start(char player, t_filler *filler)
 {
 	t_vec2i cur;
 
@@ -113,13 +113,13 @@ t_vec2i get_player_start(char player, t_filler *filler)
 				if (player == filler->player)
 				{
 					filler->player_start_set = 1;
-					filler->player_start = cur;
+					filler->player_start = ft_make_vec2(cur.x, cur.y);
 					return (filler->player_start);
 				}
 				else if (player == filler->opp)
 				{
 					filler->opp_start_set = 1;
-					filler->opp_start = cur;
+					filler->opp_start = ft_make_vec2(cur.x, cur.y);
 					return (filler->opp_start);
 				}
 			}
@@ -127,7 +127,7 @@ t_vec2i get_player_start(char player, t_filler *filler)
 		}
 		cur.y++;
 	}
-	return (cur);
+	return (ft_make_vec2(cur.x, cur.y));
 }
 
 t_vec2i get_pos_fallback(t_filler *filler, t_piece piece)
@@ -162,7 +162,7 @@ t_vec2i get_position(t_filler *filler, t_piece piece)
 	t_vec2i cur;
 
 	found_pos = 0;
-	t_vec2i opp_pos = get_player_start(filler->opp, filler);
+	t_vec2 opp_pos = get_player_start(filler->opp, filler);
 
 	if (filler->player_start.x == -1 && filler->player_start.y == - 1)
 		filler->player_start = get_player_start(filler->player, filler);
@@ -188,40 +188,40 @@ t_vec2i get_position(t_filler *filler, t_piece piece)
 	return (cur);
 }
 
-int	search_radius(t_filler *filler, t_piece piece, t_vec2i start_pos, int radius, t_vec2i *valid_pos)
+int	search_radius(t_filler *filler, t_piece piece, t_vec2 start_pos, int radius, t_vec2 *valid_pos)
 {
-	t_vec2i dir;
+	int spread;
+	int leg_count;
 	t_vec2i cur;
-
-	t_vec2i opp_pos;
+	t_vec2 opp_pos;
 
 	opp_pos = get_player_start(filler->opp, filler);
-	debug_log("opp: r%d c%d\n", opp_pos.y, opp_pos.x);
-	dir.x = opp_pos.x - start_pos.x;
-	dir.y = opp_pos.y - start_pos.y;
-	//dir = ft_normalize_vec2i(dir);
-	debug_log("dir: %d %d\n", dir.x, dir.y);
-	debug_log("len %d\n", ft_len_vec2i(dir));
-	cur.x = dir.x * radius;
-	cur.y = dir.y * radius;
 
-	if (filler->spider_angle >= 180)
-		filler->spider_angle = 0;
+	t_vec2 direction = ft_normalize_vec2(ft_sub_vec2(opp_pos, start_pos));
+	//debug_log("dir %.2f %.2f\n", direction.x, direction.y);
 
-	while (filler->spider_angle <= 180)
+	spread = 90;
+	leg_count = 2;
+
+	filler->spider_angle = ft_rad_to_deg(tan(direction.y / direction.x)) - spread / leg_count;
+	//debug_log("angle %d\n", filler->spider_angle);
+	if (filler->spider_angle >= spread)
+		filler->spider_angle = ft_rad_to_deg(tan(direction.y / direction.x)) - spread / leg_count;
+
+	while (filler->spider_angle < spread)
 	{
-		cur.x = start_pos.x + cos(filler->spider_angle * 3.14 / 180) * radius;
-		cur.y = start_pos.y + sin(filler->spider_angle * 3.14 / 180) * radius;
-		if (cur.x > 0 && cur.x < filler->map->width - piece.width - piece.max_offset.x &&
-			cur.y > 0 && cur.y < filler->map->height - piece.height - piece.max_offset.y)
+		cur.x = start_pos.x + cos(ft_deg_to_rad(filler->spider_angle)) * radius;
+		cur.y = start_pos.y + sin(ft_deg_to_rad(filler->spider_angle)) * radius;
+		if (cur.x > 0 && cur.x < filler->map->width - piece.width - piece.max_offset.x + 1 &&
+			cur.y > 0 && cur.y < filler->map->height - piece.height - piece.max_offset.y + 1)
 		{
 			if (test_piece(filler, piece, cur))
 			{
-				*valid_pos = cur;
+				*valid_pos = ft_make_vec2(cur.x, cur.y);
 				return (1);
 			}
 		}
-		filler->spider_angle += 45;
+		filler->spider_angle += spread / leg_count;
 	}
 	return (0);
 }
@@ -229,18 +229,18 @@ int	search_radius(t_filler *filler, t_piece piece, t_vec2i start_pos, int radius
 t_vec2i spider_strategy(t_filler *filler, t_piece piece)
 {
 	int radius;
-	t_vec2i start_pos;
-	t_vec2i valid_pos;
+	t_vec2 start_pos;
+	t_vec2 valid_pos;
 
 	start_pos = get_player_start(filler->player, filler);
-	valid_pos = ft_make_vec2i(0,0);
+	valid_pos = ft_make_vec2(0,0);
 	radius = 1;
 
 	while (radius < ft_max(filler->map->width, filler->map->height))
 	{
 		if (search_radius(filler, piece, start_pos, radius, &valid_pos))
 		{
-			return (valid_pos);
+			return (ft_make_vec2i(valid_pos.x, valid_pos.y));
 		}
 		radius++;
 	}
