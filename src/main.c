@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 19:40:38 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:07:27 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@ int	main(void)
 	t_piece *piece;
 	t_filler *filler;
 
+
 	filler = (t_filler*)malloc(sizeof(t_filler));
+	filler->player_start_set = 0;
 	filler->player_start.x = -1;
 	filler->player_start.y = -1;
+	filler->spider_angle = 0;
 	filler->map = NULL;
 	piece = NULL;
 
 	char *line;
 	init_logger("debug.log", "w");
+	debug_log("BUFF_SIZE %d\n", BUFF_SIZE);
 	while (ft_get_next_line(STDIN, &line))
 	{
 		//debug_log(line);
@@ -60,10 +64,14 @@ int	main(void)
 			piece = read_piece(ft_atoi(split[2]), ft_atoi(split[1]));
 			if (piece != NULL)
 			{
+
 				t_vec2i p;
-				p = get_position(filler, *filler->map, *piece);
+				p = spider_strategy(filler, *piece);
+				p.x -= piece->min_offset.x;
+				p.y -= piece->min_offset.y;
 				debug_log("piece pos: r%d c%d\n", p.y, p.x);
 				ft_printf("%d %d\n", p.y, p.x);
+				usleep(100000);
 			}
 			else
 				break ;
