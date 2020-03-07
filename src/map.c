@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/07 14:02:49 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:24:38 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,14 @@ int	test_piece(t_filler *filler, t_piece piece, t_vec2i pos)
 	return (num_overlap == 1);
 }
 
-t_vec2i get_player_start(t_filler *filler)
+t_vec2i get_player_start(char player, t_filler *filler)
 {
 	t_vec2i cur;
 
-	if (filler->player_start_set)
-	{
-		debug_log("player start set: r%d c%d\n", filler->player_start.y, filler->player_start.x);
+	if (player == filler->player && filler->player_start_set)
 		return (filler->player_start);
-	}
+	if (player == filler->opp && filler->opp_start_set)
+		return (filler->opp_start);
 	cur.x = 0;
 	cur.y = 0;
 	while (cur.y < filler->map->height)
@@ -108,12 +107,21 @@ t_vec2i get_player_start(t_filler *filler)
 		cur.x = 0;
 		while (cur.x < filler->map->width)
 		{
-			if (filler->map->data[cur.y][cur.x] == filler->player)
+			if (filler->map->data[cur.y][cur.x] == player)
 			{
-				debug_log("player start: r%d c%d\n", cur.y, cur.x);
-				filler->player_start_set = 1;
-				filler->player_start = cur;
-				return (filler->player_start);
+				debug_log("player %c start: r%d c%d\n", player, cur.y, cur.x);
+				if (player == filler->player)
+				{
+					filler->player_start_set = 1;
+					filler->player_start = cur;
+					return (filler->player_start);
+				}
+				else if (player == filler->opp)
+				{
+					filler->opp_start_set = 1;
+					filler->opp_start = cur;
+					return (filler->opp_start);
+				}
 			}
 			cur.x++;
 		}
@@ -154,10 +162,10 @@ t_vec2i get_position(t_filler *filler, t_piece piece)
 	t_vec2i cur;
 
 	found_pos = 0;
-	t_vec2i opp_pos = get_opponent_pos(*filler->map);
+	t_vec2i opp_pos = get_player_start(filler->opp, filler);
 
 	if (filler->player_start.x == -1 && filler->player_start.y == - 1)
-		filler->player_start = get_player_start(filler);
+		filler->player_start = get_player_start(filler->player, filler);
 	cur.y = filler->player_start.y;
 	while (cur.y < opp_pos.y - piece.height + piece.max_offset.y + 1)
 	{
@@ -185,17 +193,25 @@ int	search_radius(t_filler *filler, t_piece piece, t_vec2i start_pos, int radius
 	t_vec2i dir;
 	t_vec2i cur;
 
-	dir = ft_make_vec2i(0, 1);
+	t_vec2i opp_pos;
+
+	opp_pos = get_player_start(filler->opp, filler);
+	debug_log("opp: r%d c%d\n", opp_pos.y, opp_pos.x);
+	dir.x = opp_pos.x - start_pos.x;
+	dir.y = opp_pos.y - start_pos.y;
+	//dir = ft_normalize_vec2i(dir);
+	debug_log("dir: %d %d\n", dir.x, dir.y);
+	debug_log("len %d\n", ft_len_vec2i(dir));
 	cur.x = dir.x * radius;
 	cur.y = dir.y * radius;
 
-	if (filler->spider_angle >= 359)
+	if (filler->spider_angle >= 180)
 		filler->spider_angle = 0;
 
-	while (filler->spider_angle < 360)
+	while (filler->spider_angle <= 180)
 	{
-		cur.x = start_pos.x + cos(filler->spider_angle*2*3.14/180) * radius;
-		cur.y = start_pos.y + sin(filler->spider_angle*2*3.14/180) * radius;
+		cur.x = start_pos.x + cos(filler->spider_angle * 3.14 / 180) * radius;
+		cur.y = start_pos.y + sin(filler->spider_angle * 3.14 / 180) * radius;
 		if (cur.x > 0 && cur.x < filler->map->width - piece.width - piece.max_offset.x &&
 			cur.y > 0 && cur.y < filler->map->height - piece.height - piece.max_offset.y)
 		{
@@ -205,7 +221,7 @@ int	search_radius(t_filler *filler, t_piece piece, t_vec2i start_pos, int radius
 				return (1);
 			}
 		}
-		filler->spider_angle += 10;
+		filler->spider_angle += 45;
 	}
 	return (0);
 }
@@ -216,11 +232,11 @@ t_vec2i spider_strategy(t_filler *filler, t_piece piece)
 	t_vec2i start_pos;
 	t_vec2i valid_pos;
 
-	start_pos = get_player_start(filler);
+	start_pos = get_player_start(filler->player, filler);
 	valid_pos = ft_make_vec2i(0,0);
 	radius = 1;
 
-	while (radius < filler->map->width/2)
+	while (radius < ft_max(filler->map->width, filler->map->height))
 	{
 		if (search_radius(filler, piece, start_pos, radius, &valid_pos))
 		{
