@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:35:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 13:53:58 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/09 16:49:03 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ void populate_area(char **area, int width, int height, int line_offset)
 		free(line);
 		row++;
 	}
-	print_area(area, width, height);
+	//print_area(area, width, height);
 }

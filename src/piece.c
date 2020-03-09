@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 17:40:22 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/09 16:50:17 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_vec2i calc_piece_min_offset(t_piece piece)
 
 	offset.x = left_offset(piece);
 	offset.y = top_offset(piece);
-	debug_log("piece min offset: r%d c%d\n", offset.y, offset.x);
+	//debug_log("piece min offset: r%d c%d\n", offset.y, offset.x);
 	return (offset);
 }
 
@@ -107,7 +107,7 @@ t_vec2i calc_piece_max_offset(t_piece piece)
 
 	offset.x = right_offset(piece);
 	offset.y = bottom_offset(piece);
-	debug_log("piece max offset: r%d c%d\n", offset.y, offset.x);
+	//debug_log("piece max offset: r%d c%d\n", offset.y, offset.x);
 	return (offset);
 }
 

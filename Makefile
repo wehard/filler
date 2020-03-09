@@ -6,7 +6,7 @@
 #    By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/03/09 10:30:59 by wkorande         ###   ########.fr        #
+#    Updated: 2020/03/09 14:52:39 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC = main.c\
 	debug.c\
 	area.c\
 	map.c\
-	piece.c
+	piece.c\
+	strategy_fallback.c
 
 SRCDIR = src
 
@@ -37,7 +38,11 @@ all: $(NAME)
 
 $(NAME):
 	make -C libft
-	clang -g $(FLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
+	gcc $(FLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
+
+debug:
+	make -C libft
+	gcc -g $(FLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
 
 clean:
 	@printf "Removing objects\n"

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 10:40:24 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:01:19 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct	s_filler
 	t_map		*map;
 	int			spider_radius;
 	int			spider_angle;
+	int			spider_spread;
+	int			spider_legs;
+	int			opp_tl;
+	int			opp_tr;
+	int			opp_bl;
+	int			opp_br;
 }				t_filler;
 
 typedef struct	s_spider_info
@@ -71,11 +77,12 @@ void 			populate_area(char **area, int width, int height, int line_offset);
 
 void			read_map_state(t_map *map);
 t_piece 		*read_piece(int width, int height);
+int				test_piece(t_filler *filler, t_piece piece, t_vec2i pos);
 
 void			read_player_info(t_filler *filler, int n);
 t_vec2			get_player_start(char player, t_filler *filler);
 
-t_vec2i			get_pos_fallback(t_filler *filler, t_piece piece);
+t_vec2i			strategy_fallback(t_filler *filler, t_piece piece);
 t_vec2i			calc_piece_offset(t_piece piece);
 t_vec2i			get_position(t_filler *filler, t_piece piece);
 
