@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/07 15:54:57 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/09 10:40:24 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,34 @@ typedef struct	s_filler
 	t_vec2		opp_start;
 	int			opp_start_set;
 	t_map		*map;
+	int			spider_radius;
 	int			spider_angle;
 }				t_filler;
 
+typedef struct	s_spider_info
+{
+	t_vec2		start_pos;
+	int			beg_rad;
+	int			end_rad;
+}				t_spider_info;
+
 void			ft_panic(char *error);
-void 			read_player_info(t_filler *filler, int n);
-t_piece 		*read_piece(int width, int height);
+
+t_map			*create_map(int width, int height);
 char 			**make_area(int width, int height);
 void 			populate_area(char **area, int width, int height, int line_offset);
 
-t_map			*create_map(int width, int height);
 void			read_map_state(t_map *map);
-t_vec2i 		get_pos_fallback(t_filler *filler, t_piece piece);
-t_vec2i 		calc_piece_offset(t_piece piece);
-t_vec2i 		get_position(t_filler *filler, t_piece piece);
+t_piece 		*read_piece(int width, int height);
 
-t_vec2i spider_strategy(t_filler *filler, t_piece piece);
+void			read_player_info(t_filler *filler, int n);
+t_vec2			get_player_start(char player, t_filler *filler);
+
+t_vec2i			get_pos_fallback(t_filler *filler, t_piece piece);
+t_vec2i			calc_piece_offset(t_piece piece);
+t_vec2i			get_position(t_filler *filler, t_piece piece);
+
+
+t_vec2i			spider_strategy(t_filler *filler, t_piece piece);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:31:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/06 14:42:29 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/09 10:33:08 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,40 @@ void read_player_info(t_filler *filler, int n)
 	debug_log("opponent is: %c\n", filler->opp);
 }
 
+t_vec2 get_player_start(char player, t_filler *filler)
+{
+	t_vec2i cur;
 
+	if (player == filler->player && filler->player_start_set)
+		return (filler->player_start);
+	if (player == filler->opp && filler->opp_start_set)
+		return (filler->opp_start);
+	cur.x = 0;
+	cur.y = 0;
+	while (cur.y < filler->map->height)
+	{
+		cur.x = 0;
+		while (cur.x < filler->map->width)
+		{
+			if (filler->map->data[cur.y][cur.x] == player)
+			{
+				debug_log("player %c start: r%d c%d\n", player, cur.y, cur.x);
+				if (player == filler->player)
+				{
+					filler->player_start_set = 1;
+					filler->player_start = ft_make_vec2(cur.x, cur.y);
+					return (filler->player_start);
+				}
+				else if (player == filler->opp)
+				{
+					filler->opp_start_set = 1;
+					filler->opp_start = ft_make_vec2(cur.x, cur.y);
+					return (filler->opp_start);
+				}
+			}
+			cur.x++;
+		}
+		cur.y++;
+	}
+	return (ft_make_vec2(cur.x, cur.y));
+}
