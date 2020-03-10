@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 13:44:46 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:02:31 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,6 @@ t_vec2i			strategy_fallback(t_filler *filler, t_piece piece);
 
 int				search_radius(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
 int				search_area(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
+int				check_opp_fill(t_filler *filler, int res);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 13:12:04 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:50:33 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_map *create_map(int width, int height)
 	map->width = width;
 	map->height = height;
 	map->data = make_area(width, height);
-	//debug_log("map size: r%d c%d\n", height, width);
+	debug_log("map size: r%d c%d\n", height, width);
 	return (map);
 }
 
