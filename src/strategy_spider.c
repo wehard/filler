@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:09:13 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 13:45:42 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:01:35 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "debug.h"
 #include <math.h>
 
-static t_vec2 nearest_opp(t_filler *filler, t_vec2 pos)
+t_vec2 nearest_opp(t_filler *filler, t_vec2 pos)
 {
 	t_vec2i cur;
 	t_vec2 nearest;

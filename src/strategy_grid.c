@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:07:46 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 16:20:25 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:31:56 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,19 @@ t_vec2i strategy_grid(t_filler *filler, t_piece piece)
 {
 	t_search_info info;
 
-	int grid_size = filler->map->width / 5; // 15
-	info.beg_rad = 10;
-	info.end_rad = 30;
+	int grid_size = filler->map->width / 7; // 15
+	info.beg_rad = 3;
+	info.end_rad = 20;
 	info.step_angle = 90;
 
 	t_vec2 player_start = get_player_start(filler->player, filler);
 	t_vec2 opp_start = get_player_start(filler->opp, filler);
 	t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
+	double distance = ft_len_vec2(ft_sub_vec2(nearest_opp(filler, player_start), player_start));
+	if (distance > filler->map->width / 7)
+		return (strategy_fallback(filler, piece));
 
-
-	int f = check_opp_fill(filler, 8);
+	/* int f = check_opp_fill(filler, 16);
 	if (f == 0)
 		dir = ft_make_vec2(-1,-1);
 	if (f == 1)
@@ -107,21 +109,21 @@ t_vec2i strategy_grid(t_filler *filler, t_piece piece)
 	if (f == 2)
 		dir = ft_make_vec2(-1,1);
 	if (f == 3)
-		dir = ft_make_vec2(1,1);
+		dir = ft_make_vec2(1,1); */
 
-	if (dir.x < 0)
+	if (dir.y < 0)
 	{
-		if (dir.y < 0)
+		if (dir.x < 0)
 			return (top_left(filler, piece, grid_size, info));
 		else
-			return (bottom_left(filler, piece, grid_size, info));
+			return (strategy_fallback(filler, piece));
 	}
 	else
 	{
-		if (dir.y < 0)
-			return (strategy_fallback(filler, piece)); //return (top_right(filler, piece, grid_size, info));
+		if (dir.x < 0)
+			return (bottom_left(filler, piece, grid_size, info));
 		else
-			return (bottom_right(filler, piece, grid_size, info));
+			return (bottom_right(filler, piece, grid_size, info)); //return (top_right(filler, piece, grid_size, info));
 	}
 	return (strategy_fallback(filler, piece));
 }
