@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 20:36:39 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:46:43 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ int	update(void *param)
 	t_env *env;
 
 	env = (t_env*)param;
+	env = 0;
 	read_output(env);
-	ft_printf("env w%d h%d\n", env->width, env->height);
+	//ft_printf("update\n");
 	return (0);
 }
 
@@ -105,11 +106,11 @@ int		main(void)
 
 	env = init_env(1280, 720, "fillit");
 
-	render(env);
+	//render(env);
 	//mlx_hook(env->mlx->win_ptr, 2, (1L << 0), key_press, (void*)env);
 	//mlx_expose_hook(env->mlx->win_ptr, update, (void*)env);
 	//mlx_hook(env->mlx->win_ptr, 4, (1L << 2), mouse_press, (void*)env);
-	mlx_loop_hook(env->mlx, update, (void*)env);
+	mlx_loop_hook(env->mlx->mlx_ptr, update, (void*)env);
 	mlx_hook(env->mlx->win_ptr, 17, 0, close_window, (void*)env);
 	mlx_loop(env->mlx->mlx_ptr);
 	return (0);
