@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:09:13 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 17:01:35 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:34:56 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_vec2 nearest_opp(t_filler *filler, t_vec2 pos)
 t_vec2i strategy_spider(t_filler *filler, t_piece piece)
 {
 	//t_vec2 dir;
-	double angle;
+	//double angle;
 
 
 	//t_vec2 pos;
@@ -60,7 +60,7 @@ t_vec2i strategy_spider(t_filler *filler, t_piece piece)
 	//t_vec2 opp_start = get_player_start(filler->opp, filler);
 	t_vec2 dir = ft_sub_vec2(nearest_opp(filler, player_start), player_start);
 	double len = ft_len_vec2(dir);
-	angle = ft_rad_to_deg(atan2(dir.y, dir.x)) - filler->spider_spread / 2;
+	//angle = ft_rad_to_deg(atan2(dir.y, dir.x)) - filler->spider_spread / 2;
 	valid_pos = ft_make_vec2(0,0);
 
 	if (len > 50)

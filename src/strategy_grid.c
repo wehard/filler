@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:07:46 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 18:12:32 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:34:25 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_vec2i top_left(t_filler *filler, t_piece piece, int grid_size, t_search_info i
 {
 	t_vec2i cur;
 	t_vec2 valid_pos;
-	t_vec2 player_start;
+	//t_vec2 player_start;
 
-	player_start = get_player_start(filler->player, filler);
+	//player_start = get_player_start(filler->player, filler);
 	cur.y = 0; // (int)player_start.y % grid_size;
 	while (cur.y < filler->map->height - piece.width - piece.max_offset.y + 1)
 	{
@@ -43,9 +43,9 @@ t_vec2i bottom_right(t_filler *filler, t_piece piece, int grid_size, t_search_in
 {
 	t_vec2i cur;
 	t_vec2 valid_pos;
-	t_vec2 player_start;
+	//t_vec2 player_start;
 
-	player_start = get_player_start(filler->player, filler);
+	//player_start = get_player_start(filler->player, filler);
 	cur.y = filler->map->height; //- (int)player_start.y % grid_size;
 	while (cur.y >= 0)
 	{
@@ -66,9 +66,9 @@ t_vec2i bottom_left(t_filler *filler, t_piece piece, int grid_size, t_search_inf
 {
 	t_vec2i cur;
 	t_vec2 valid_pos;
-	t_vec2 player_start;
+	//t_vec2 player_start;
 
-	player_start = get_player_start(filler->player, filler);
+	//player_start = get_player_start(filler->player, filler);
 	cur.y = filler->map->height; // - (int)player_start.y % grid_size;
 	while (cur.y >= 0)
 	{
