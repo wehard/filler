@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 11:45:18 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:30:32 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(void)
 			{
 
 				t_vec2i p;
-				p = spider_strategy(filler, *piece);
+				p = strategy_grid(filler, *piece);
 				p.x -= piece->min_offset.x;
 				p.y -= piece->min_offset.y;
 				//debug_log("piece pos: r%d c%d\n", p.y, p.x);

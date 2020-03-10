@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 11:56:48 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:44:46 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,11 @@ typedef struct	s_filler
 
 typedef struct	s_search_info
 {
-	t_vec2		start_pos;
+	t_vec2		pos;
 	int			beg_rad;
 	int			end_rad;
 	int			step_angle;
+	int			size;
 }				t_search_info;
 
 void			ft_panic(char *error);
@@ -83,11 +84,13 @@ int				test_piece(t_filler *filler, t_piece piece, t_vec2i pos);
 void			read_player_info(t_filler *filler, int n);
 t_vec2			get_player_start(char player, t_filler *filler);
 
-t_vec2i			strategy_fallback(t_filler *filler, t_piece piece);
 t_vec2i			calc_piece_offset(t_piece piece);
 t_vec2i			get_position(t_filler *filler, t_piece piece);
 
+t_vec2i			strategy_grid(t_filler *filler, t_piece piece);
+t_vec2i			strategy_spider(t_filler *filler, t_piece piece);
+t_vec2i			strategy_fallback(t_filler *filler, t_piece piece);
 
-t_vec2i			spider_strategy(t_filler *filler, t_piece piece);
-
+int				search_radius(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
+int				search_area(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
 #endif

@@ -6,7 +6,7 @@
 #    By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/03/09 14:52:39 by wkorande         ###   ########.fr        #
+#    Updated: 2020/03/10 13:13:56 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,15 @@ NAME = wkorande.filler
 CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c\
-	player.c\
-	debug.c\
 	area.c\
+	debug.c\
 	map.c\
 	piece.c\
-	strategy_fallback.c
+	player.c\
+	search.c\
+	strategy_fallback.c\
+	strategy_grid.c\
+	strategy_spider.c
 
 SRCDIR = src
 

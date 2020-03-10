@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 16:50:17 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:11:44 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,31 @@ t_piece *read_piece(int width, int height)
 	return (piece);
 }
 
+int	test_piece(t_filler *filler, t_piece piece, t_vec2i pos)
+{
+	int num_overlap;
+	t_vec2i m;
+	t_vec2i p;
+
+	num_overlap = 0;
+	p.y = piece.min_offset.y;
+	m.y = pos.y;
+	while (m.y < pos.y + piece.height - piece.max_offset.y && p.y < piece.height - piece.max_offset.y)
+	{
+		p.x = piece.min_offset.x;
+		m.x = pos.x;
+		while (m.x < pos.x + piece.width - piece.max_offset.x && p.x < piece.width - piece.max_offset.x)
+		{
+			if (piece.data[p.y][p.x] == ASTERISK && filler->map->data[m.y][m.x] == filler->opp)
+				return (0);
+			if (filler->map->data[m.y][m.x] != '.' && piece.data[p.y][p.x] != '.')
+				num_overlap++;
+			p.x++;
+			m.x++;
+		}
+		p.y++;
+		m.y++;
+	}
+	return (num_overlap == 1);
+}
 
