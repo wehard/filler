@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 19:33:50 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:45:18 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	main(void)
 	filler->player_start = ft_make_vec2(-1, -1);
 	filler->opp_start_set = 0;
 	filler->opp_start = ft_make_vec2(-1, -1);
-	filler->spider_radius = 1;
+	filler->spider_radius = 0;
 	filler->spider_angle = 0;
-	filler->spider_spread = 180;
-	filler->spider_legs = 2;
+	filler->spider_spread = 90;
+	filler->spider_legs = 3;
 	filler->map = NULL;
 
 	piece = NULL;

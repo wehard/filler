@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 19:30:31 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 12:46:53 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,18 @@ int search_area(t_filler *filler, t_piece piece, t_vec2 pos, int size, t_vec2 *v
 }
 
 
-int	search_radius(t_filler *filler, t_piece piece, t_spider_info spider, t_vec2 *valid_pos)
+int	search_radius(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos)
 {
 	t_vec2i cur;
 	int angle;
 
-	while (spider.beg_rad < spider.end_rad)
+	while (info.beg_rad < info.end_rad)
 	{
 		angle = 0;
 		while (angle < 360)
 		{
-			cur.x = spider.start_pos.x + cos(ft_deg_to_rad(angle)) * spider.beg_rad;
-			cur.y = spider.start_pos.y + sin(ft_deg_to_rad(angle)) * spider.beg_rad;
+			cur.x = info.start_pos.x + cos(ft_deg_to_rad(angle)) * info.beg_rad;
+			cur.y = info.start_pos.y + sin(ft_deg_to_rad(angle)) * info.beg_rad;
 			if (cur.x >= 0 && cur.x < filler->map->width - piece.width - piece.max_offset.x + 1 &&
 				cur.y >= 0 && cur.y < filler->map->height - piece.height - piece.max_offset.y + 1)
 			{
@@ -117,9 +117,9 @@ int	search_radius(t_filler *filler, t_piece piece, t_spider_info spider, t_vec2 
 					return (1);
 				}
 			}
-			angle += 20;
+			angle += info.step_angle;
 		}
-		spider.beg_rad++;
+		info.beg_rad++;
 	}
 	return (0);
 }
@@ -160,51 +160,30 @@ t_vec2i spider_strategy(t_filler *filler, t_piece piece)
 	double angle;
 
 
-	t_spider_info spider;
-	t_vec2 pos;
+	//t_vec2 pos;
 	t_vec2 valid_pos;
 
 	t_vec2 player_start = get_player_start(filler->player, filler);
-
-	//t_vec2 opp_nearest = nearest_opp(filler, player_start); // get_player_start(filler->opp, filler);
-	//double len = ft_len_vec2(ft_sub_vec2(opp_nearest, player_start));
-
-	//filler->spider_spread = 160 * (1.0 - len / 100.0);
-
-
-	t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(get_player_start(filler->opp, filler), player_start));
+	//t_vec2 opp_start = get_player_start(filler->opp, filler);
+	t_vec2 dir = ft_sub_vec2(nearest_opp(filler, player_start), player_start);
+	double len = ft_len_vec2(dir);
 	angle = ft_rad_to_deg(atan2(dir.y, dir.x)) - filler->spider_spread / 2;
-	//debug_log("angle %.2f\n", angle);
 	valid_pos = ft_make_vec2(0,0);
 
-	//pos = get_player_start(filler->player, filler);
-	pos.x = player_start.x + cos(ft_deg_to_rad(filler->spider_angle + angle)) * filler->spider_radius;
-	pos.y = player_start.y + sin(ft_deg_to_rad(filler->spider_angle + angle)) * filler->spider_radius;
+	if (len > 50)
+		return (strategy_fallback(filler, piece));
+	//pos.x = player_start.x + cos(ft_deg_to_rad(filler->spider_angle + angle)) * filler->spider_radius;
+	//pos.y = player_start.y + sin(ft_deg_to_rad(filler->spider_angle + angle)) * filler->spider_radius;
+	t_search_info info;
 
-	spider.start_pos = pos;
-	spider.beg_rad = 1;
-	spider.end_rad = 100;
-
-	if (search_radius(filler, piece, spider, &valid_pos))
+	info.start_pos = player_start;// ft_add_vec2(player_start, ft_mul_vec2(ft_normalize_vec2(dir), len/2));
+	info.beg_rad = 1;
+	info.end_rad = 200;
+	info.step_angle = 90;
+	if (search_radius(filler, piece, info, &valid_pos))
 	{
-		filler->spider_angle += filler->spider_spread / filler->spider_legs-1;
-		if (filler->spider_angle >= filler->spider_spread)
-		{
-			filler->spider_angle = 0;
-			filler->spider_radius += 2;
-			//filler->spider_spread--;
-		}
 		return (ft_make_vec2i(valid_pos.x, valid_pos.y));
 	}
-	else if (search_area(filler, piece, pos, 100, &valid_pos))
-	{
-		//filler->spider_angle = angle;
-		//filler->player_start = opp_nearest;
-		filler->spider_spread = 120;
-		//debug_log("%d\n", filler->spider_spread);
-		return (ft_make_vec2i(valid_pos.x, valid_pos.y));
-	}
-	//filler->spider_spread--;
-	//debug_log("fallback\n");
+
 	return (strategy_fallback(filler, piece));
 }

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 19:01:19 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:56:48 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ typedef struct	s_filler
 	int			opp_br;
 }				t_filler;
 
-typedef struct	s_spider_info
+typedef struct	s_search_info
 {
 	t_vec2		start_pos;
 	int			beg_rad;
 	int			end_rad;
-}				t_spider_info;
+	int			step_angle;
+}				t_search_info;
 
 void			ft_panic(char *error);
 

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 18:13:50 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:30:24 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,73 @@ static t_vec2i bottom_right(t_filler *filler, t_piece piece)
 	return(ft_make_vec2i(-1, -1));
 }
 
+int		check_opp_fill(t_filler *filler, int res)
+{
+	t_vec2i cur;
+	int		fill[4];
+	int		quadrant;
+	int		i;
+
+	quadrant = 0;
+	fill[0] = 0;
+	fill[1] = 0;
+	fill[2] = 0;
+	fill[3] = 0;
+	cur.y = 0;
+	while (cur.y < filler->map->height)
+	{
+		cur.x = 0;
+		while (cur.x < filler->map->width)
+		{
+			if (cur.x < filler->map->width / 2 && cur.y < filler->map->height / 2)
+				quadrant = 0;
+			if (cur.x > filler->map->width / 2 && cur.y < filler->map->height / 2)
+				quadrant = 1;
+			if (cur.x < filler->map->width / 2 && cur.y > filler->map->height / 2)
+				quadrant = 2;
+			if (cur.x > filler->map->width / 2 && cur.y > filler->map->height / 2)
+				quadrant = 3;
+			if (filler->map->data[cur.y][cur.x] == filler->opp)
+				fill[quadrant]++;
+			cur.x += res;
+		}
+		cur.y += res;
+	}
+	int w;
+
+	w = -1;
+	i = 0;
+	while (i < 4)
+	{
+		if (fill[i] > w)
+		{
+			quadrant = i;
+			w = fill[i];
+		}
+		i++;
+	}
+	return (quadrant);
+}
+
 t_vec2i strategy_fallback(t_filler *filler, t_piece piece)
 {
-	t_vec2 player_start = get_player_start(filler->player, filler);
-	t_vec2 opp_start = get_player_start(filler->opp, filler);
-	t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
-	//debug_log("dir x%.2f y%.2f\n", dir.x, dir.y);
-	if (dir.x < 0)
+	//t_vec2 player_start = get_player_start(filler->player, filler);
+	//t_vec2 opp_start = get_player_start(filler->opp, filler);
+	//t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
+
+	int f = check_opp_fill(filler, 10);
+
+	if (f == 0)
+		return (top_left(filler, piece));
+	if (f == 1)
+		return (top_right(filler, piece));
+	if (f == 2)
+		return (bottom_left(filler, piece));
+	if (f == 3)
+		return (bottom_right(filler, piece));
+
+
+	/* if (dir.x < 0)
 	{
 		if (dir.y < 0)
 			return (top_left(filler, piece));
@@ -121,6 +181,6 @@ t_vec2i strategy_fallback(t_filler *filler, t_piece piece)
 			return (top_right(filler, piece));
 		else
 			return (bottom_right(filler, piece));
-	}
+	} */
 	return (ft_make_vec2i(-1, -1));
 }
