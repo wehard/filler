@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 20:46:43 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 23:00:29 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void		read_player(t_env *env, char *line)
 		ft_panic("error: wrong player number!");
 	env->p1 = num == 1 ? 'O' : 'X';
 	env->p2 = num == 1 ? 'X' : 'O';
+	ft_printf("read player %d as %c\n", num, num == 1 ? env->p1 : env->p2);
 }
 
 void read_map(t_map *map)
@@ -35,13 +36,16 @@ void read_map(t_map *map)
 	char *line;
 	int row;
 
+	if (!map)
+		ft_panic("map is null!");
+
 	ft_get_next_line(0, &line); // Skip first because it just has unnecessary stuff
 	row = 0;
 	while (row < map->height && ft_get_next_line(0, &line))
 	{
 		if (line == NULL)
 			continue;
-		map->data[row] = ft_strncpy(map->data[row], line, map->width);
+		map->data[row] = ft_strncpy(map->data[row], line + 4, map->width);
 		free(line);
 		row++;
 	}
@@ -51,7 +55,13 @@ void		read_output(t_env *env)
 {
 	char	*line;
 
-	while (ft_get_next_line(0, &line) == 1)
+	if (!env)
+	{
+		ft_printf("env is null!\n");
+		return ;
+	}
+
+	while (ft_get_next_line(0, &line))
 	{
 		if (ft_strncmp(line, "$$$", 3) == 0)
 			read_player(env, line);
@@ -72,33 +82,60 @@ void		read_output(t_env *env)
 	}
 }
 
-int	update(void *param)
+void	draw_tile(t_env *env, int x, int y, int size, int color)
 {
-	t_env *env;
+	t_vec2i cur;
 
-	env = (t_env*)param;
-	env = 0;
-	read_output(env);
-	//ft_printf("update\n");
-	return (0);
+	cur.y = y+1;
+	while (cur.y < y + size-1)
+	{
+		cur.x = x+1;
+		while (cur.x < x + size-1)
+		{
+			mlx_pixel_put(env->mlx->mlx_ptr, env->mlx->win_ptr, cur.x, cur.y, color);
+			cur.x++;
+		}
+		cur.y++;
+	}
+
 }
 
 void	render(t_env *env)
 {
 	t_vec2i	cur;
+	int tilesize = env->height / env->map->height;
 
 	cur.y = 0;
-	while (cur.y < env->height)
+	while (cur.y < env->map->height)
 	{
 		cur.x = 0;
-		while (cur.x < env->width)
+		while (cur.x < env->map->width)
 		{
-
+			int color;
+			if (env->map->data[cur.y][cur.x] == '.')
+				color = 0xFFFFFF;
+			else if (env->map->data[cur.y][cur.x] == 'X')
+				color = 0xFF0000;
+			else if (env->map->data[cur.y][cur.x] == 'O')
+				color = 0x0000FF;
+			draw_tile(env, cur.x * tilesize, cur.y * tilesize, tilesize, color);
 			cur.x++;
 		}
 		cur.y++;
 	}
 }
+
+int	update(void *param)
+{
+	t_env *env;
+
+	env = (t_env*)param;
+	read_output(env);
+	render(env);
+	return (0);
+}
+
+
 
 int		main(void)
 {

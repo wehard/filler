@@ -6,12 +6,13 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 20:20:14 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 20:29:55 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/10 22:35:57 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visualizer.h"
 #include "libft.h"
+#include "ft_printf.h"
 #include <stdlib.h>
 
 t_map *create_map(int width, int height)
@@ -30,5 +31,6 @@ t_map *create_map(int width, int height)
 		ft_bzero(map->data[y], width);
 		y++;
 	}
+	ft_printf("created map r%d c%d\n", height, width);
 	return (map);
 }
