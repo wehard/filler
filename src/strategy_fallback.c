@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 11:30:24 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:29:07 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,10 +152,11 @@ int		check_opp_fill(t_filler *filler, int res)
 
 t_vec2i strategy_fallback(t_filler *filler, t_piece piece)
 {
-	//t_vec2 player_start = get_player_start(filler->player, filler);
-	//t_vec2 opp_start = get_player_start(filler->opp, filler);
-	//t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
+	t_vec2 player_start = get_player_start(filler->player, filler);
+	t_vec2 opp_start = get_player_start(filler->opp, filler);
+	t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
 
+/*
 	int f = check_opp_fill(filler, 10);
 
 	if (f == 0)
@@ -166,9 +167,9 @@ t_vec2i strategy_fallback(t_filler *filler, t_piece piece)
 		return (bottom_left(filler, piece));
 	if (f == 3)
 		return (bottom_right(filler, piece));
+*/
 
-
-	/* if (dir.x < 0)
+	if (dir.x < 0)
 	{
 		if (dir.y < 0)
 			return (top_left(filler, piece));
@@ -181,6 +182,6 @@ t_vec2i strategy_fallback(t_filler *filler, t_piece piece)
 			return (top_right(filler, piece));
 		else
 			return (bottom_right(filler, piece));
-	} */
+	}
 	return (ft_make_vec2i(-1, -1));
 }

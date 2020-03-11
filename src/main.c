@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 16:13:05 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:34:21 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ int	main(void)
 			{
 
 				t_vec2i p;
-				if ((filler->turn / 20) % 2 == 0)
-					p = strategy_grid(filler, *piece);
-				else
+				//if ((filler->turn / 20)  % 2 == 0)
 					p = strategy_heat(filler, *piece);
+				// else
+					// p = strategy_grid(filler, *piece);
 				p.x -= piece->min_offset.x;
 				p.y -= piece->min_offset.y;
 				//debug_log("piece pos: r%d c%d\n", p.y, p.x);

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 14:50:33 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:10:50 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,4 @@ void read_map_state(t_map *map)
 
 	ft_get_next_line(STDIN, &line); // Skip first because it just has unnecessary stuff
 	populate_area(map->data, map->width, map->height, 4);
-	//print_area(map->data, map->width, map->height);
 }

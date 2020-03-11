@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 16:03:11 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:41:44 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,14 @@ t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 
 	//t_vec2 player_start = get_player_start(filler->player, filler);
 	//double distance = ft_len_vec2(ft_sub_vec2(nearest_opp(filler, player_start), player_start));
-	//if (distance > filler->map->width / 6)
-	//	return (strategy_grid(filler, piece));
 
-	update_heat_map(filler);
+
+	if (filler->turn < filler->map->width/2)
+		return (strategy_fallback(filler, piece));
+
+
+	if (filler->turn % 10 == 0)
+		update_heat_map(filler);
 
 	found_pos = 0;
 	best_score = 1000;
@@ -42,7 +46,9 @@ t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 				cur.x++;
 				continue ;
 			}
-			if (test_piece(filler, piece, cur) && cur_score < best_score)
+			// fix score with map size
+			int threshold = 0;
+			if (cur_score > threshold && cur_score < best_score && test_piece(filler, piece, cur))
 			{
 				best_pos = cur;
 				best_score = cur_score;
@@ -54,5 +60,5 @@ t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 	}
 	if (found_pos)
 		return (best_pos);
-	return (strategy_grid(filler, piece));
+	return (strategy_fallback(filler, piece));
 }

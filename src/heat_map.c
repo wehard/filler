@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 16:11:45 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:55:57 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	update_heat_map(t_filler *filler)
 		while (cur.x < filler->map->width)
 		{
 			// if (filler->map->data[cur.y][cur.x] == filler->player)
-				//filler->heat_map->data[cur.y * filler->map->width + cur.x] = -1;
+			// 	filler->heat_map->data[cur.y * filler->map->width + cur.x] = -1;
 			// else
 				filler->heat_map->data[cur.y * filler->map->width + cur.x] =
 					ft_max(1, distance_to(filler, ft_make_vec2(cur.x, cur.y)));

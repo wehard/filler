@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 15:56:39 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:10:25 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ t_vec2i calc_piece_min_offset(t_piece piece)
 
 	offset.x = left_offset(piece);
 	offset.y = top_offset(piece);
-	//debug_log("piece min offset: r%d c%d\n", offset.y, offset.x);
 	return (offset);
 }
 
@@ -107,7 +106,6 @@ t_vec2i calc_piece_max_offset(t_piece piece)
 
 	offset.x = right_offset(piece);
 	offset.y = bottom_offset(piece);
-	//debug_log("piece max offset: r%d c%d\n", offset.y, offset.x);
 	return (offset);
 }
 
@@ -125,8 +123,6 @@ t_piece *read_piece(int width, int height)
 	}
 	piece->data = make_area(piece->width, piece->height);
 	populate_area(piece->data, piece->width, piece->height, 0);
-	//t_vec2i c = calc_top_left_corner(*piece);
-	//debug_log("corner: %d %d", c.x, c.y);
 	piece->min_offset = calc_piece_min_offset(*piece);
 	piece->max_offset = calc_piece_max_offset(*piece);
 	return (piece);
