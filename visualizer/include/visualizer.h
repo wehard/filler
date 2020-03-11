@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:50:07 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 20:29:06 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:00:06 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include "time.h"
 # include "matrix.h"
 # include "color.h"
+
+# define P1_COLOR 0xEA9A21
+# define P2_COLOR 0x3B74C3
+# define BG_COLOR 0x282828
 
 typedef struct	s_mlx_img
 {
@@ -50,7 +54,9 @@ typedef struct	s_env
 	int			height;
 	t_map		*map;
 	char		p1;
+	char		*p1_name;
 	char		p2;
+	char		*p2_name;
 }				t_env;
 
 t_env			*init_env(int width, int height, char *title);

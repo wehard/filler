@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 23:00:29 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:22:40 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "keys.h"
 #include "vector.h"
 #include <unistd.h>
+#include <errno.h>
 
 void		read_player(t_env *env, char *line)
 {
@@ -26,9 +27,21 @@ void		read_player(t_env *env, char *line)
 	num = ft_atoi(line + 10);
 	if (num < 1 || num > 2)
 		ft_panic("error: wrong player number!");
-	env->p1 = num == 1 ? 'O' : 'X';
-	env->p2 = num == 1 ? 'X' : 'O';
-	ft_printf("read player %d as %c\n", num, num == 1 ? env->p1 : env->p2);
+	if (num == 1)
+	{
+		env->p1 = 'O';
+		env->p1_name = ft_strnew(ft_strlen(line));
+		ft_strcpy(env->p1_name, ft_strchr(line, '['));
+		ft_printf("p1: %s\n", env->p1_name);
+	}
+	else
+	{
+		env->p2 = 'X';
+		env->p2_name = ft_strnew(ft_strlen(line));
+		ft_strcpy(env->p2_name, ft_strchr(line, '['));
+		ft_printf("p2: %s\n", env->p1_name);
+	}
+
 }
 
 void read_map(t_map *map)
@@ -92,7 +105,7 @@ void	draw_tile(t_env *env, int x, int y, int size, int color)
 		cur.x = x+1;
 		while (cur.x < x + size-1)
 		{
-			mlx_pixel_put(env->mlx->mlx_ptr, env->mlx->win_ptr, cur.x, cur.y, color);
+			put_pixel_mlx_img(env->mlx_img, cur.x, cur.y, color);
 			cur.x++;
 		}
 		cur.y++;
@@ -103,7 +116,14 @@ void	draw_tile(t_env *env, int x, int y, int size, int color)
 void	render(t_env *env)
 {
 	t_vec2i	cur;
-	int tilesize = env->height / env->map->height;
+	t_vec2i map_offset;
+	int tilesize;
+
+	mlx_clear_window(env->mlx->mlx_ptr, env->mlx->win_ptr);
+
+	tilesize = ft_min(env->height / 120, env->height / env->map->height);
+	map_offset.x = env->width / 2 - (env->map->width * tilesize) / 2;
+	map_offset.y = env->height / 2 - (env->map->height * tilesize) / 2;
 
 	cur.y = 0;
 	while (cur.y < env->map->height)
@@ -113,16 +133,19 @@ void	render(t_env *env)
 		{
 			int color;
 			if (env->map->data[cur.y][cur.x] == '.')
-				color = 0xFFFFFF;
-			else if (env->map->data[cur.y][cur.x] == 'X')
-				color = 0xFF0000;
-			else if (env->map->data[cur.y][cur.x] == 'O')
-				color = 0x0000FF;
-			draw_tile(env, cur.x * tilesize, cur.y * tilesize, tilesize, color);
+				color = BG_COLOR;
+			else if (env->map->data[cur.y][cur.x] == env->p1)
+				color = P1_COLOR;
+			else if (env->map->data[cur.y][cur.x] == env->p2)
+				color = P2_COLOR;
+			draw_tile(env, cur.x * tilesize + map_offset.x, cur.y * tilesize + map_offset.y, tilesize, color);
 			cur.x++;
 		}
 		cur.y++;
 	}
+	mlx_put_image_to_window(env->mlx->mlx_ptr, env->mlx->win_ptr, env->mlx_img->img, 0, 0);
+	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, map_offset.x-ft_strlen(env->p1_name)*10, map_offset.y, P1_COLOR, env->p1_name);
+	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, map_offset.x+env->map->width*tilesize, map_offset.y, P2_COLOR, env->p2_name);
 }
 
 int	update(void *param)
@@ -135,18 +158,23 @@ int	update(void *param)
 	return (0);
 }
 
+int		key_press(int key, void *param)
+{
+	t_env *env;
 
+	env = (t_env*)param;
+	if (key == KEY_ESC )
+		del_env_exit(env);
+	return (0);
+}
 
 int		main(void)
 {
 	t_env	*env;
 
-	env = init_env(1280, 720, "fillit");
+	env = init_env(1280, 720, "filler");
 
-	//render(env);
-	//mlx_hook(env->mlx->win_ptr, 2, (1L << 0), key_press, (void*)env);
-	//mlx_expose_hook(env->mlx->win_ptr, update, (void*)env);
-	//mlx_hook(env->mlx->win_ptr, 4, (1L << 2), mouse_press, (void*)env);
+	mlx_hook(env->mlx->win_ptr, 2, (1L << 0), key_press, (void*)env);
 	mlx_loop_hook(env->mlx->mlx_ptr, update, (void*)env);
 	mlx_hook(env->mlx->win_ptr, 17, 0, close_window, (void*)env);
 	mlx_loop(env->mlx->mlx_ptr);
