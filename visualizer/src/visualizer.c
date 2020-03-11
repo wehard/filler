@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 12:22:40 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:54:57 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,23 @@ void	draw_tile(t_env *env, int x, int y, int size, int color)
 		}
 		cur.y++;
 	}
+}
 
+void	draw_rect(t_env *env, t_vec2i pos, t_vec2i size, int color)
+{
+	t_vec2i cur;
+
+	cur.y = pos.y;
+	while (cur.y < pos.y + size.y)
+	{
+		cur.x = pos.x;
+		while (cur.x < pos.x + size.x)
+		{
+			put_pixel_mlx_img(env->mlx_img, cur.x, cur.y, color);
+			cur.x++;
+		}
+		cur.y++;
+	}
 }
 
 void	render(t_env *env)
@@ -118,6 +134,13 @@ void	render(t_env *env)
 	t_vec2i	cur;
 	t_vec2i map_offset;
 	int tilesize;
+	int p1_score;
+	int p2_score;
+	int tiles;
+
+	tiles = env->map->width * env->map->height;
+	p1_score = 0;
+	p2_score = 0;
 
 	mlx_clear_window(env->mlx->mlx_ptr, env->mlx->win_ptr);
 
@@ -135,17 +158,25 @@ void	render(t_env *env)
 			if (env->map->data[cur.y][cur.x] == '.')
 				color = BG_COLOR;
 			else if (env->map->data[cur.y][cur.x] == env->p1)
+			{
+				p1_score++;
 				color = P1_COLOR;
+			}
 			else if (env->map->data[cur.y][cur.x] == env->p2)
+			{
+				p2_score++;
 				color = P2_COLOR;
+			}
 			draw_tile(env, cur.x * tilesize + map_offset.x, cur.y * tilesize + map_offset.y, tilesize, color);
 			cur.x++;
 		}
 		cur.y++;
 	}
+	draw_rect(env, ft_make_vec2i(map_offset.x + 1,map_offset.y - tilesize - 1), ft_make_vec2i(env->map->width*tilesize*((double)p1_score/(double)tiles),tilesize), P1_COLOR);
+	draw_rect(env, ft_make_vec2i(map_offset.x + 1,map_offset.y + env->map->height * tilesize), ft_make_vec2i(env->map->width*tilesize*((double)p2_score/(double)tiles),tilesize), P2_COLOR);
 	mlx_put_image_to_window(env->mlx->mlx_ptr, env->mlx->win_ptr, env->mlx_img->img, 0, 0);
-	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, map_offset.x-ft_strlen(env->p1_name)*10, map_offset.y, P1_COLOR, env->p1_name);
-	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, map_offset.x+env->map->width*tilesize, map_offset.y, P2_COLOR, env->p2_name);
+	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, (env->width / 2) - (ft_strlen(env->p1_name)*10)/2, map_offset.y-30, P1_COLOR, env->p1_name);
+	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, (env->width / 2) - (ft_strlen(env->p2_name)*10)/2, map_offset.y + env->map->height * tilesize+ tilesize, P2_COLOR, env->p2_name);
 }
 
 int	update(void *param)
