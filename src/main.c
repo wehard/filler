@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 13:30:32 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:13:05 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(void)
 	filler->spider_spread = 90;
 	filler->spider_legs = 3;
 	filler->map = NULL;
-
+	filler->turn = 0;
 	piece = NULL;
 
 	char *line;
@@ -59,6 +59,7 @@ int	main(void)
 			{
 				char **split = ft_strsplit(line, ' ');
 				filler->map = create_map(ft_atoi(split[2]), ft_atoi(split[1]));
+				filler->heat_map = create_heat_map(filler->map->width, filler->map->height);
 			}
 			read_map_state(filler->map);
 		}
@@ -70,12 +71,16 @@ int	main(void)
 			{
 
 				t_vec2i p;
-				p = strategy_grid(filler, *piece);
+				if ((filler->turn / 20) % 2 == 0)
+					p = strategy_grid(filler, *piece);
+				else
+					p = strategy_heat(filler, *piece);
 				p.x -= piece->min_offset.x;
 				p.y -= piece->min_offset.y;
 				//debug_log("piece pos: r%d c%d\n", p.y, p.x);
 				ft_printf("%d %d\n", p.y, p.x);
 				//usleep(500000);
+				filler->turn++;
 			}
 			else
 				break ;

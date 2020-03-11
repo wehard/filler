@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 13:11:44 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:56:39 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ int	test_piece(t_filler *filler, t_piece piece, t_vec2i pos)
 				return (0);
 			if (filler->map->data[m.y][m.x] != '.' && piece.data[p.y][p.x] != '.')
 				num_overlap++;
+			if (num_overlap > 1)
+				return (0);
 			p.x++;
 			m.x++;
 		}

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:58:03 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 14:46:26 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 14:55:26 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,24 @@ void print_area(char **area, int width, int height)
 		debug_log_char('\n');
 		r++;
 	}
+}
+
+void print_heat_map(int *map, int width, int height)
+{
+	int r;
+	int c;
+
+	r = 0;
+	while (r < height)
+	{
+		c = 0;
+		while (c < width)
+		{
+			debug_log("%3d", map[r * width + c]);
+			c++;
+		}
+		debug_log_char('\n');
+		r++;
+	}
+	debug_log_char('\n');
 }

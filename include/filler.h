@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 17:01:42 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:03:21 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ typedef struct	s_map
 	int			height;
 	char		**data;
 }				t_map;
+
+typedef struct	s_heat_map
+{
+	int			width;
+	int			height;
+	int			*data;
+}				t_heat_map;
 
 typedef struct	s_piece
 {
@@ -52,6 +59,7 @@ typedef struct	s_filler
 	t_vec2		opp_start;
 	int			opp_start_set;
 	t_map		*map;
+	t_heat_map	*heat_map;
 	int			spider_radius;
 	int			spider_angle;
 	int			spider_spread;
@@ -60,6 +68,7 @@ typedef struct	s_filler
 	int			opp_tr;
 	int			opp_bl;
 	int			opp_br;
+	int			turn;
 }				t_filler;
 
 typedef struct	s_search_info
@@ -77,6 +86,9 @@ t_map			*create_map(int width, int height);
 char 			**make_area(int width, int height);
 void 			populate_area(char **area, int width, int height, int line_offset);
 
+t_heat_map		*create_heat_map(int width, int height);
+void			update_heat_map(t_filler *filler);
+int				get_score(t_filler *filler, t_vec2i pos);
 void			read_map_state(t_map *map);
 t_piece 		*read_piece(int width, int height);
 int				test_piece(t_filler *filler, t_piece piece, t_vec2i pos);
@@ -90,6 +102,7 @@ t_vec2i			get_position(t_filler *filler, t_piece piece);
 t_vec2i			strategy_grid(t_filler *filler, t_piece piece);
 t_vec2i			strategy_spider(t_filler *filler, t_piece piece);
 t_vec2i			strategy_fallback(t_filler *filler, t_piece piece);
+t_vec2i			strategy_heat(t_filler *filler, t_piece piece);
 
 int				search_radius(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
 int				search_area(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
