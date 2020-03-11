@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 12:54:57 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:58:37 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	render(t_env *env)
 		cur.y++;
 	}
 	draw_rect(env, ft_make_vec2i(map_offset.x + 1,map_offset.y - tilesize - 1), ft_make_vec2i(env->map->width*tilesize*((double)p1_score/(double)tiles),tilesize), P1_COLOR);
-	draw_rect(env, ft_make_vec2i(map_offset.x + 1,map_offset.y + env->map->height * tilesize), ft_make_vec2i(env->map->width*tilesize*((double)p2_score/(double)tiles),tilesize), P2_COLOR);
+	draw_rect(env, ft_make_vec2i(map_offset.x + 1,map_offset.y + env->map->height * tilesize + 1), ft_make_vec2i(env->map->width*tilesize*((double)p2_score/(double)tiles),tilesize), P2_COLOR);
 	mlx_put_image_to_window(env->mlx->mlx_ptr, env->mlx->win_ptr, env->mlx_img->img, 0, 0);
 	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, (env->width / 2) - (ft_strlen(env->p1_name)*10)/2, map_offset.y-30, P1_COLOR, env->p1_name);
 	mlx_string_put(env->mlx->mlx_ptr, env->mlx->win_ptr, (env->width / 2) - (ft_strlen(env->p2_name)*10)/2, map_offset.y + env->map->height * tilesize+ tilesize, P2_COLOR, env->p2_name);
