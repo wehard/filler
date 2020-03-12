@@ -6,12 +6,13 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 12:24:26 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 12:45:10 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "vector.h"
+#include "debug.h"
 
 t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 {
@@ -29,12 +30,12 @@ t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 		return (strategy_fallback(filler, piece));
 
 
-	// if (filler->map->width > 80)
-	// {
-	// 	if (filler->turn % 10 == 0)
-	// 		update_heat_map(filler);
-	// }
-	// else
+	if (filler->map->width > 80)
+	{
+		if (filler->turn % 10 == 0)
+			update_heat_map(filler);
+	}
+	else
 		update_heat_map(filler);
 
 	found_pos = 0;
@@ -52,7 +53,8 @@ t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 				continue ;
 			}
 			// fix score with map size
-			int threshold = 0; //(filler->map->width / 100) * 4;
+			int threshold = (filler->map->width / 100) * 3;
+			debug_log("threshold: %d\n", threshold);
 			if (cur_score > threshold && cur_score < best_score && test_piece(filler, piece, cur))
 			{
 				best_pos = cur;

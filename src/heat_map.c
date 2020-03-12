@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 12:21:43 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 12:35:05 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	update_heat_map(t_filler *filler)
 		cur.x = 0;
 		while (cur.x < filler->map->width)
 		{
-			if (discard(filler, cur) || heat_map[cur.y * filler->map->width + cur.x] == -1)
+			if (heat_map[cur.y * filler->map->width + cur.x] == -1 || discard(filler, cur))
 				heat_map[cur.y * filler->map->width + cur.x] = -1;
 			else
 				heat_map[cur.y * filler->map->width + cur.x] =
@@ -91,7 +91,7 @@ void	update_heat_map(t_filler *filler)
 		}
 		cur.y++;
 	}
-	print_heat_map(filler->heat_map->data, filler->map->width, filler->map->height);
+	//print_heat_map(filler->heat_map->data, filler->map->width, filler->map->height);
 }
 
 int		get_score(t_filler *filler, t_vec2i pos)
