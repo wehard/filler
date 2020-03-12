@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 16:42:59 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:08:09 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,13 @@ t_vec2i strategy_heat(t_filler *filler, t_piece *piece)
 	//double distance = ft_len_vec2(ft_sub_vec2(nearest_opp(filler, player_start), player_start));
 
 
-	if (filler->turn < filler->map->width / 2 && filler->map->width > 80)
-		return (strategy_fallback(filler, piece));
+	if (filler->turn < filler->map->width && filler->map->width > 80)
+	{
+		if (filler->turn % 2 == 0)
+			return (strategy_fallback_dir(filler, piece, DIR_BOTTOMLEFT));
+		else
+			return (strategy_fallback_dir(filler, piece, DIR_TOPLEFT));
+	}
 	int threshold = 0;
 	//threshold = filler->map->width > 80 ? 1 : 0;
 	if (filler->map->width > 80)

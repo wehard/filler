@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 15:39:40 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:06:14 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@
 # define ASTERISK '*'
 # define P1 'O'
 # define P2 'X'
-
+# define DIR_TOPLEFT 0
+# define DIR_TOPRIGHT 1
+# define DIR_BOTTOMLEFT 2
+# define DIR_BOTTOMRIGHT 3
 
 
 typedef struct	s_map
@@ -106,6 +109,7 @@ t_vec2i			get_position(t_filler *filler, t_piece piece);
 t_vec2i			strategy_grid(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_fallback(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_heat(t_filler *filler, t_piece *piece);
+t_vec2i			strategy_fallback_dir(t_filler *filler, t_piece *piece, int dir);
 
 int				search_radius(t_filler *filler, t_piece *piece, t_search_info info, t_vec2 *valid_pos);
 int				search_area(t_filler *filler, t_piece *piece, t_search_info info, t_vec2 *valid_pos);

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 15:30:58 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:06:05 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,4 +170,17 @@ t_vec2i strategy_fallback(t_filler *filler, t_piece *piece)
 			return (bottom_right(filler, piece));
 	}
 	return (ft_make_vec2i(-1, -1));
+}
+
+t_vec2i strategy_fallback_dir(t_filler *filler, t_piece *piece, int dir)
+{
+	if (dir == DIR_TOPLEFT)
+		return (top_left(filler, piece));
+	else if (dir == DIR_BOTTOMLEFT)
+		return (bottom_left(filler, piece));
+	else if (dir == DIR_TOPRIGHT)
+		return (top_right(filler, piece));
+	else if (dir == DIR_BOTTOMRIGHT)
+		return (bottom_right(filler, piece));
+	return (ft_make_vec2i(-999, -999));
 }
