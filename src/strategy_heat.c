@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 15:28:21 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:42:59 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ t_vec2i strategy_heat(t_filler *filler, t_piece *piece)
 
 	if (filler->turn < filler->map->width / 2 && filler->map->width > 80)
 		return (strategy_fallback(filler, piece));
-
-
+	int threshold = 0;
+	//threshold = filler->map->width > 80 ? 1 : 0;
 	if (filler->map->width > 80)
 	{
 		if (filler->turn % 10 == 0)
+		{
 			update_heat_map(filler);
+			//threshold = filler->turn / 50;
+		}
 	}
 	else
 		update_heat_map(filler);
@@ -53,7 +56,7 @@ t_vec2i strategy_heat(t_filler *filler, t_piece *piece)
 				continue ;
 			}
 			// fix score with map size
-			int threshold = (filler->map->width / 100) * 3;
+			//
 			//debug_log("threshold: %d\n", threshold);
 			if (cur_score > threshold && cur_score < best_score && test_piece(filler, piece, cur))
 			{

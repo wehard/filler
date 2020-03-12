@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 15:38:12 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:39:40 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ t_vec2i			calc_piece_offset(t_piece piece);
 t_vec2i			get_position(t_filler *filler, t_piece piece);
 
 t_vec2i			strategy_grid(t_filler *filler, t_piece *piece);
-t_vec2i			strategy_spider(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_fallback(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_heat(t_filler *filler, t_piece *piece);
 
