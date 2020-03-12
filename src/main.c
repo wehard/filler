@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 17:34:21 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:27:55 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-void	ft_panic(char *error)
+void		ft_panic(char *error)
 {
 	ft_putendl_fd(error, 2);
 	exit(EXIT_FAILURE);
 }
 
-int	main(void)
+t_filler	*init_filler(void)
 {
-	t_piece *piece;
 	t_filler *filler;
 
-	filler = (t_filler*)malloc(sizeof(t_filler));
+	if (!(filler = (t_filler*)malloc(sizeof(t_filler))))
+	{
+		debug_log("init_filler: malloc error!\n");
+		return (NULL);
+	}
 	filler->player_start_set = 0;
 	filler->player_start = ft_make_vec2(-1, -1);
 	filler->opp_start_set = 0;
@@ -40,50 +43,50 @@ int	main(void)
 	filler->spider_spread = 90;
 	filler->spider_legs = 3;
 	filler->map = NULL;
+	filler->heat_map = NULL;
 	filler->turn = 0;
-	piece = NULL;
+	return (filler);
+}
 
-	char *line;
+void		init_map(t_filler *filler, char *line)
+{
+	filler->map = create_map(line);
+	filler->heat_map = create_heat_map(filler->map->width, filler->map->height);
+}
+
+void		output_pos(t_filler *filler, t_piece *piece, strategy_func func)
+{
+	t_vec2i pos;
+
+	pos = func(filler, piece);
+	pos.x -= piece->min_offset.x;
+	pos.y -= piece->min_offset.y;
+	ft_printf("%d %d\n", pos.y, pos.x);
+}
+
+int			main(void)
+{
+	t_piece		*piece;
+	t_filler	*filler;
+	char		*line;
+
+	filler = init_filler();
 	init_logger("debug.log", "w");
-	debug_log("BUFF_SIZE %d\n", BUFF_SIZE);
+	piece = NULL;
 	while (ft_get_next_line(STDIN, &line))
 	{
-		//debug_log(line);
 		if (ft_strncmp(line, "$$$", 3) == 0)
-		{
 			read_player_info(filler, ft_atoi(line + 10));
-		}
 		else if (ft_strncmp(line, "Plateau", 7) == 0)
 		{
 			if (filler->map == NULL)
-			{
-				char **split = ft_strsplit(line, ' ');
-				filler->map = create_map(ft_atoi(split[2]), ft_atoi(split[1]));
-				filler->heat_map = create_heat_map(filler->map->width, filler->map->height);
-			}
+				init_map(filler, line);
 			read_map_state(filler->map);
 		}
 		else if (ft_strncmp(line, "Piece", 5) == 0)
 		{
-			char **split = ft_strsplit(line, ' ');
-			piece = read_piece(ft_atoi(split[2]), ft_atoi(split[1]));
-			if (piece != NULL)
-			{
-
-				t_vec2i p;
-				//if ((filler->turn / 20)  % 2 == 0)
-					p = strategy_heat(filler, *piece);
-				// else
-					// p = strategy_grid(filler, *piece);
-				p.x -= piece->min_offset.x;
-				p.y -= piece->min_offset.y;
-				//debug_log("piece pos: r%d c%d\n", p.y, p.x);
-				ft_printf("%d %d\n", p.y, p.x);
-				//usleep(500000);
-				filler->turn++;
-			}
-			else
-				break ;
+			if ((piece = read_piece(line)) && ++filler->turn)
+				output_pos(filler, piece, strategy_heat);
 		}
 		free(line);
 	}

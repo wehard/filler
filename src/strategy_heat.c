@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 12:45:10 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:28:21 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "vector.h"
 #include "debug.h"
 
-t_vec2i strategy_heat(t_filler *filler, t_piece piece)
+t_vec2i strategy_heat(t_filler *filler, t_piece *piece)
 {
 	t_vec2i cur;
 	t_vec2i best_pos;
@@ -41,10 +41,10 @@ t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 	found_pos = 0;
 	best_score = 1000;
 	cur.y = 0;
-	while (cur.y < filler->map->height - piece.height - piece.max_offset.y + 1)
+	while (cur.y < filler->map->height - piece->height - piece->max_offset.y + 1)
 	{
 		cur.x = 0;
-		while (cur.x < filler->map->width - piece.width + piece.max_offset.x + 1)
+		while (cur.x < filler->map->width - piece->width + piece->max_offset.x + 1)
 		{
 			cur_score = get_score(filler, cur);
 			if (cur_score < 0)
@@ -54,7 +54,7 @@ t_vec2i strategy_heat(t_filler *filler, t_piece piece)
 			}
 			// fix score with map size
 			int threshold = (filler->map->width / 100) * 3;
-			debug_log("threshold: %d\n", threshold);
+			//debug_log("threshold: %d\n", threshold);
 			if (cur_score > threshold && cur_score < best_score && test_piece(filler, piece, cur))
 			{
 				best_pos = cur;

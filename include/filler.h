@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 16:19:41 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:38:12 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define ASTERISK '*'
 # define P1 'O'
 # define P2 'X'
+
+
 
 typedef struct	s_map
 {
@@ -80,9 +82,11 @@ typedef struct	s_search_info
 	int			size;
 }				t_search_info;
 
+typedef t_vec2i	(*strategy_func)(t_filler *f, t_piece *p);
+
 void			ft_panic(char *error);
 
-t_map			*create_map(int width, int height);
+t_map			*create_map(char *line);
 char 			**make_area(int width, int height);
 void 			populate_area(char **area, int width, int height, int line_offset);
 
@@ -90,8 +94,8 @@ t_heat_map		*create_heat_map(int width, int height);
 void			update_heat_map(t_filler *filler);
 int				get_score(t_filler *filler, t_vec2i pos);
 void			read_map_state(t_map *map);
-t_piece 		*read_piece(int width, int height);
-int				test_piece(t_filler *filler, t_piece piece, t_vec2i pos);
+t_piece 		*read_piece(char *line);
+int				test_piece(t_filler *filler, t_piece *piece, t_vec2i pos);
 
 void			read_player_info(t_filler *filler, int n);
 t_vec2			get_player_start(char player, t_filler *filler);
@@ -99,13 +103,13 @@ t_vec2			get_player_start(char player, t_filler *filler);
 t_vec2i			calc_piece_offset(t_piece piece);
 t_vec2i			get_position(t_filler *filler, t_piece piece);
 
-t_vec2i			strategy_grid(t_filler *filler, t_piece piece);
-t_vec2i			strategy_spider(t_filler *filler, t_piece piece);
-t_vec2i			strategy_fallback(t_filler *filler, t_piece piece);
-t_vec2i			strategy_heat(t_filler *filler, t_piece piece);
+t_vec2i			strategy_grid(t_filler *filler, t_piece *piece);
+t_vec2i			strategy_spider(t_filler *filler, t_piece *piece);
+t_vec2i			strategy_fallback(t_filler *filler, t_piece *piece);
+t_vec2i			strategy_heat(t_filler *filler, t_piece *piece);
 
-int				search_radius(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
-int				search_area(t_filler *filler, t_piece piece, t_search_info info, t_vec2 *valid_pos);
+int				search_radius(t_filler *filler, t_piece *piece, t_search_info info, t_vec2 *valid_pos);
+int				search_area(t_filler *filler, t_piece *piece, t_search_info info, t_vec2 *valid_pos);
+t_vec2 			search_opp(t_filler *filler, t_vec2 pos);
 int				check_opp_fill(t_filler *filler, int res);
-t_vec2 			nearest_opp(t_filler *filler, t_vec2 pos);
 #endif

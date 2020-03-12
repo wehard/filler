@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:35:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/09 16:49:03 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 14:12:06 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include "debug.h"
 #include <stdlib.h>
 
-char **make_area(int width, int height)
+char	**make_area(int width, int height)
 {
-	char **area;
-	int y;
+	char	**area;
+	int		y;
 
 	area = (char**)malloc(sizeof(char*) * height);
 	y = 0;
@@ -32,20 +32,18 @@ char **make_area(int width, int height)
 	return (area);
 }
 
-void populate_area(char **area, int width, int height, int line_offset)
+void	populate_area(char **area, int width, int height, int line_offset)
 {
-	char *line;
-	int row;
+	char	*line;
+	int		row;
 
 	row = 0;
 	while (row < height && ft_get_next_line(STDIN, &line))
 	{
-		//debug_log(line);
 		if (line == NULL)
 			continue;
 		area[row] = ft_strncpy(area[row], line + line_offset, width);
 		free(line);
 		row++;
 	}
-	//print_area(area, width, height);
 }

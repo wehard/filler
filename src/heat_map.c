@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 12:35:05 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 14:23:45 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "debug.h"
 #include "libft.h"
 
-t_heat_map	*create_heat_map(int width, int height)
+t_heat_map		*create_heat_map(int width, int height)
 {
 	t_heat_map	*heat_map;
 	int			i;
@@ -32,11 +32,11 @@ t_heat_map	*create_heat_map(int width, int height)
 	return (heat_map);
 }
 
-double distance_to(t_filler *filler, t_vec2 pos)
+static double	distance_to(t_filler *filler, t_vec2 pos)
 {
 	t_vec2i	cur;
 	double	closest;
-	double	dist;
+	double	d;
 
 	closest = 1000.0;
 	cur.y = 0;
@@ -47,10 +47,10 @@ double distance_to(t_filler *filler, t_vec2 pos)
 		{
 			if (filler->map->data[cur.y][cur.x] == filler->opp)
 			{
-				dist = ft_len_vec2(ft_sub_vec2(ft_make_vec2(cur.x, cur.y), pos));
-				if (dist < closest)
+				d = ft_len_vec2(ft_sub_vec2(ft_make_vec2(cur.x, cur.y), pos));
+				if (d < closest)
 				{
-					closest = dist;
+					closest = d;
 				}
 			}
 			cur.x++;
@@ -60,41 +60,46 @@ double distance_to(t_filler *filler, t_vec2 pos)
 	return (closest);
 }
 
-int		discard(t_filler *filler, t_vec2i pos)
+static int		discard(t_filler *filler, t_vec2i pos)
 {
-	if (pos.y > 0 && filler->map->data[pos.y-1][pos.x] == filler->opp &&
-		pos.y < filler->map->height - 1 && filler->map->data[pos.y+1][pos.x] == filler->opp &&
-		pos.x > 0 && filler->map->data[pos.y][pos.x-1] == filler->opp &&
-		pos.x < filler->map->width - 1 && filler->map->data[pos.y][pos.x+1] == filler->opp)
+	t_map *map;
+
+	map = filler->map;
+	if (pos.y > 0 && map->data[pos.y - 1][pos.x] == filler->opp &&
+		pos.y < map->height - 1 && map->data[pos.y + 1][pos.x] == filler->opp &&
+		pos.x > 0 && map->data[pos.y][pos.x - 1] == filler->opp &&
+		pos.x < map->width - 1 && map->data[pos.y][pos.x + 1] == filler->opp)
 		return (1);
 	return (0);
 }
 
-void	update_heat_map(t_filler *filler)
+int				get_score(t_filler *filler, t_vec2i pos)
 {
-	t_vec2i cur;
-	int *heat_map;
+	return (filler->heat_map->data[pos.y * filler->map->width + pos.x]);
+}
 
-	heat_map = filler->heat_map->data;
+void			update_heat_map(t_filler *filler)
+{
+	t_vec2i		cur;
+	t_map		*map;
+	t_heat_map	*hmap;
+
+	map = filler->map;
+	hmap = filler->heat_map;
 	cur.y = 0;
-	while (cur.y < filler->map->height)
+	while (cur.y < map->height)
 	{
 		cur.x = 0;
-		while (cur.x < filler->map->width)
+		while (cur.x < map->width)
 		{
-			if (heat_map[cur.y * filler->map->width + cur.x] == -1 || discard(filler, cur))
-				heat_map[cur.y * filler->map->width + cur.x] = -1;
+			if (hmap->data[cur.y * map->width + cur.x] == -1 ||
+					discard(filler, cur))
+				hmap->data[cur.y * map->width + cur.x] = -1;
 			else
-				heat_map[cur.y * filler->map->width + cur.x] =
+				hmap->data[cur.y * filler->map->width + cur.x] =
 					ft_max(1, distance_to(filler, ft_make_vec2(cur.x, cur.y)));
 			cur.x++;
 		}
 		cur.y++;
 	}
-	//print_heat_map(filler->heat_map->data, filler->map->width, filler->map->height);
-}
-
-int		get_score(t_filler *filler, t_vec2i pos)
-{
-	return (filler->heat_map->data[pos.y * filler->map->width + pos.x]);
 }

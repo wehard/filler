@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:07:46 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 16:42:03 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:38:24 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "debug.h"
 
 
-t_vec2i top_left(t_filler *filler, t_piece piece, int grid_size, t_search_info info)
+t_vec2i top_left(t_filler *filler, t_piece *piece, int grid_size, t_search_info info)
 {
 	t_vec2i cur;
 	t_vec2 valid_pos;
@@ -23,10 +23,10 @@ t_vec2i top_left(t_filler *filler, t_piece piece, int grid_size, t_search_info i
 
 	//player_start = get_player_start(filler->player, filler);
 	cur.y = 0; // (int)player_start.y % grid_size;
-	while (cur.y < filler->map->height - piece.width - piece.max_offset.y + 1)
+	while (cur.y < filler->map->height - piece->width - piece->max_offset.y + 1)
 	{
 		cur.x = 0; // (int)player_start.x % grid_size;
-		while (cur.x < filler->map->width - piece.width + piece.max_offset.x + 1)
+		while (cur.x < filler->map->width - piece->width + piece->max_offset.x + 1)
 		{
 
 			info.pos = ft_make_vec2(cur.x, cur.y);
@@ -39,7 +39,7 @@ t_vec2i top_left(t_filler *filler, t_piece piece, int grid_size, t_search_info i
 	return (strategy_fallback(filler, piece));
 }
 
-t_vec2i bottom_right(t_filler *filler, t_piece piece, int grid_size, t_search_info info)
+t_vec2i bottom_right(t_filler *filler, t_piece *piece, int grid_size, t_search_info info)
 {
 	t_vec2i cur;
 	t_vec2 valid_pos;
@@ -62,7 +62,7 @@ t_vec2i bottom_right(t_filler *filler, t_piece piece, int grid_size, t_search_in
 	return (strategy_fallback(filler, piece));
 }
 
-t_vec2i bottom_left(t_filler *filler, t_piece piece, int grid_size, t_search_info info)
+t_vec2i bottom_left(t_filler *filler, t_piece *piece, int grid_size, t_search_info info)
 {
 	t_vec2i cur;
 	t_vec2 valid_pos;
@@ -73,7 +73,7 @@ t_vec2i bottom_left(t_filler *filler, t_piece piece, int grid_size, t_search_inf
 	while (cur.y >= 0)
 	{
 		cur.x = 0; //(int)player_start.x % grid_size;
-		while (cur.x < filler->map->width - piece.width + piece.max_offset.x + 1)
+		while (cur.x < filler->map->width - piece->width + piece->max_offset.x + 1)
 		{
 			info.pos = ft_make_vec2(cur.x, cur.y);
 			if (search_radius(filler, piece, info, &valid_pos))
@@ -85,7 +85,7 @@ t_vec2i bottom_left(t_filler *filler, t_piece piece, int grid_size, t_search_inf
 	return (strategy_fallback(filler, piece));
 }
 
-t_vec2i strategy_grid(t_filler *filler, t_piece piece)
+t_vec2i strategy_grid(t_filler *filler, t_piece *piece)
 {
 	t_search_info info;
 
@@ -97,7 +97,7 @@ t_vec2i strategy_grid(t_filler *filler, t_piece piece)
 	t_vec2 player_start = get_player_start(filler->player, filler);
 	t_vec2 opp_start = get_player_start(filler->opp, filler);
 	t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
-	double distance = ft_len_vec2(ft_sub_vec2(nearest_opp(filler, player_start), player_start));
+	double distance = ft_len_vec2(ft_sub_vec2(search_opp(filler, player_start), player_start));
 	if (distance > filler->map->width / 6)
 		return (strategy_fallback(filler, piece));
 
