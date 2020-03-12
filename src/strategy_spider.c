@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:09:13 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 20:34:56 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 11:55:43 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ t_vec2i strategy_spider(t_filler *filler, t_piece piece)
 	{
 		return (ft_make_vec2i(valid_pos.x, valid_pos.y));
 	}
-
 	return (strategy_fallback(filler, piece));
 }

@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 17:55:57 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/12 12:21:43 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,38 @@ double distance_to(t_filler *filler, t_vec2 pos)
 	return (closest);
 }
 
+int		discard(t_filler *filler, t_vec2i pos)
+{
+	if (pos.y > 0 && filler->map->data[pos.y-1][pos.x] == filler->opp &&
+		pos.y < filler->map->height - 1 && filler->map->data[pos.y+1][pos.x] == filler->opp &&
+		pos.x > 0 && filler->map->data[pos.y][pos.x-1] == filler->opp &&
+		pos.x < filler->map->width - 1 && filler->map->data[pos.y][pos.x+1] == filler->opp)
+		return (1);
+	return (0);
+}
+
 void	update_heat_map(t_filler *filler)
 {
 	t_vec2i cur;
+	int *heat_map;
 
+	heat_map = filler->heat_map->data;
 	cur.y = 0;
 	while (cur.y < filler->map->height)
 	{
 		cur.x = 0;
 		while (cur.x < filler->map->width)
 		{
-			// if (filler->map->data[cur.y][cur.x] == filler->player)
-			// 	filler->heat_map->data[cur.y * filler->map->width + cur.x] = -1;
-			// else
-				filler->heat_map->data[cur.y * filler->map->width + cur.x] =
+			if (discard(filler, cur) || heat_map[cur.y * filler->map->width + cur.x] == -1)
+				heat_map[cur.y * filler->map->width + cur.x] = -1;
+			else
+				heat_map[cur.y * filler->map->width + cur.x] =
 					ft_max(1, distance_to(filler, ft_make_vec2(cur.x, cur.y)));
 			cur.x++;
 		}
 		cur.y++;
 	}
-	//print_heat_map(filler->heat_map->data, filler->map->width, filler->map->height);
+	print_heat_map(filler->heat_map->data, filler->map->width, filler->map->height);
 }
 
 int		get_score(t_filler *filler, t_vec2i pos)
