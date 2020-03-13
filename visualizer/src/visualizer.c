@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 12:58:37 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/13 11:18:54 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		read_output(t_env *env)
 		return ;
 	}
 
-	while (ft_get_next_line(0, &line))
+	while (ft_get_next_line(0, &line) == 1)
 	{
 		if (ft_strncmp(line, "$$$", 3) == 0)
 			read_player(env, line);
@@ -92,6 +92,7 @@ void		read_output(t_env *env)
 			free(line);
 			return ;
 		}
+		free(line);
 	}
 }
 
@@ -142,7 +143,7 @@ void	render(t_env *env)
 	p1_score = 0;
 	p2_score = 0;
 
-	mlx_clear_window(env->mlx->mlx_ptr, env->mlx->win_ptr);
+	//mlx_clear_window(env->mlx->mlx_ptr, env->mlx->win_ptr);
 
 	tilesize = ft_min(env->height / 120, env->height / env->map->height);
 	map_offset.x = env->width / 2 - (env->map->width * tilesize) / 2;
@@ -186,7 +187,7 @@ int	update(void *param)
 	env = (t_env*)param;
 	read_output(env);
 	render(env);
-	return (0);
+	return (1);
 }
 
 int		key_press(int key, void *param)
@@ -194,7 +195,7 @@ int		key_press(int key, void *param)
 	t_env *env;
 
 	env = (t_env*)param;
-	if (key == KEY_ESC )
+	if (key == KEY_ESC)
 		del_env_exit(env);
 	return (0);
 }
@@ -206,8 +207,9 @@ int		main(void)
 	env = init_env(1280, 720, "filler");
 
 	mlx_hook(env->mlx->win_ptr, 2, (1L << 0), key_press, (void*)env);
+	mlx_hook(env->mlx->win_ptr, 17, (1L << 17), close_window, (void*)env);
+	//mlx_hook(env->mlx->win_ptr, 13, (1L<<15), update, (void*)env);
 	mlx_loop_hook(env->mlx->mlx_ptr, update, (void*)env);
-	mlx_hook(env->mlx->win_ptr, 17, 0, close_window, (void*)env);
 	mlx_loop(env->mlx->mlx_ptr);
 	return (0);
 }
