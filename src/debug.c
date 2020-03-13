@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:58:03 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 14:15:48 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/03/13 11:45:10 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	debug_log(const char *format, ...)
 
 	va_start(valist, format);
 	vfprintf(g_file, format, valist);
+	va_end(valist);
 }
 
 void	print_area(char **area, int width, int height)
