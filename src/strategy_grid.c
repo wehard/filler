@@ -6,13 +6,14 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:07:46 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 18:07:51 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 19:06:26 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "vector.h"
 #include "debug.h"
+#include <math.h>
 
 
 t_vec2i top_left(t_filler *filler, t_piece *piece, int grid_size, t_search_info info)
@@ -114,27 +115,32 @@ t_vec2i strategy_grid(t_filler *filler, t_piece *piece)
 	t_search_info info;
 
 	int grid_size = filler->grid_size;
-	info.beg_rad = 3;
-	info.end_rad = 20;
-	info.step_angle = 90;
+
 
 	t_vec2 player_start = get_player_start(filler->player, filler);
 	t_vec2 opp_start = get_player_start(filler->opp, filler);
 	t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
+
+	info.beg_rad = 0;
+	info.end_rad = 20;
+	info.start_angle = atan2(dir.y, dir.x) * 180 / 3.14;
+	info.end_angle = info.start_angle + 360;
+	info.step_angle = 90;
 	// double distance = ft_len_vec2(ft_sub_vec2(search_opp(filler, player_start), player_start));
 	// if (distance > filler->map->width / 6)
-	// 	return (strategy_fallback(filler, piece));
+	// 	return (strategy_heat(filler, piece));
 
 
 	// int f = check_opp_fill(filler, 16);
+	// debug_log("fill: %d\n", f);
 	// if (f == 0)
-	// 	dir = ft_make_vec2(-1,-1);
-	// if (f == 1)
-	// 	dir = ft_make_vec2(1,-1);
-	// if (f == 2)
-	// 	dir = ft_make_vec2(-1,1);
-	// if (f == 3)
 	// 	dir = ft_make_vec2(1,1);
+	// if (f == 1)
+	// 	dir = ft_make_vec2(-1,1);
+	// if (f == 2)
+	// 	dir = ft_make_vec2(1,-1);
+	// if (f == 3)
+	// 	dir = ft_make_vec2(-1,-1);
 
 	if (dir.y < 0)
 	{

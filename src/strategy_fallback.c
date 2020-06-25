@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   strategy_fallback.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 17:06:05 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 19:58:03 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "vector.h"
 #include "debug.h"
+#include "libft.h"
 
 static t_vec2i top_left(t_filler *filler, t_piece *piece)
 {
@@ -33,6 +34,7 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 		}
 		cur.y++;
 	}
+	debug_log("fallback failed!\n");
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -55,6 +57,7 @@ static t_vec2i top_right(t_filler *filler, t_piece *piece)
 		}
 		cur.y++;
 	}
+	debug_log("fallback failed!\n");
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -77,6 +80,7 @@ static t_vec2i bottom_left(t_filler *filler, t_piece *piece)
 		}
 		cur.y--;
 	}
+	debug_log("fallback failed!\n");
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -98,6 +102,7 @@ static t_vec2i bottom_right(t_filler *filler, t_piece *piece)
 		}
 		cur.y--;
 	}
+	debug_log("fallback failed!\n");
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -169,6 +174,7 @@ t_vec2i strategy_fallback(t_filler *filler, t_piece *piece)
 		else
 			return (bottom_right(filler, piece));
 	}
+	debug_log("fallback failed!\n");
 	return (ft_make_vec2i(-1, -1));
 }
 

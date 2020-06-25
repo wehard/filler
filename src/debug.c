@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:58:03 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/13 11:45:10 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 20:16:54 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include "debug.h"
-
-FILE	*g_file;
 
 void	init_logger(char *filename, char *mode)
 {

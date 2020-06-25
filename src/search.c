@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:10:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 15:37:44 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 18:46:21 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	search_radius(t_filler *filler, t_piece *piece, t_search_info info, t_vec2 *
 
 	while (info.beg_rad < info.end_rad)
 	{
-		angle = 0;
-		while (angle < 360)
+		angle = info.start_angle;
+		while (angle < info.end_angle)
 		{
 			cur.x = info.pos.x + cos(ft_deg_to_rad(angle)) * info.beg_rad;
 			cur.y = info.pos.y + sin(ft_deg_to_rad(angle)) * info.beg_rad;

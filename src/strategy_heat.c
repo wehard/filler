@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 18:09:50 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 19:53:46 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,9 @@ t_vec2i strategy_heat(t_filler *filler, t_piece *piece)
 	//t_vec2 player_start = get_player_start(filler->player, filler);
 	//double distance = ft_len_vec2(ft_sub_vec2(nearest_opp(filler, player_start), player_start));
 
-	if (filler->turn > 0 && filler->map->width > 80)
-	{
-		// if (filler->turn % 2 == 0)
-		// 	return (strategy_fallback_dir(filler, piece, DIR_TOPLEFT));
-		// else
-		filler->grid_size = 20; //10 - (filler->turn / 100);
-		// debug_log("grid_size: %d\n", filler->grid_size);
-		return (strategy_grid(filler, piece));
-	}
 	int threshold = 0;
-	// threshold = filler->turn / 30;
-	update_heat_map(filler);
-
+	// if (filler->turn % 2 == 0)
+		update_heat_map(filler);
 	found_pos = 0;
 	best_score = 1000;
 	cur.y = 0;

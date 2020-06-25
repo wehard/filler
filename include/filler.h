@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 17:42:47 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 19:14:55 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct	s_filler
 	int			opp_br;
 	int			turn;
 	int			grid_size;
+	t_vec2i		player_last;
 }				t_filler;
 
 typedef struct	s_search_info
@@ -84,6 +85,8 @@ typedef struct	s_search_info
 	int			end_rad;
 	int			step_angle;
 	int			size;
+	int			start_angle;
+	int			end_angle;
 }				t_search_info;
 
 typedef t_vec2i	(*strategy_func)(t_filler *f, t_piece *p);
@@ -110,6 +113,7 @@ t_vec2i			get_position(t_filler *filler, t_piece piece);
 t_vec2i			strategy_grid(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_fallback(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_heat(t_filler *filler, t_piece *piece);
+t_vec2i			strategy_circ_search(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_fallback_dir(t_filler *filler, t_piece *piece, int dir);
 
 int				search_radius(t_filler *filler, t_piece *piece, t_search_info info, t_vec2 *valid_pos);

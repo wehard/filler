@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:06:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 14:51:01 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 20:16:50 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEBUG_H
 # define DEBUG_H
+
+#include <stdio.h>
+
+#define DEBUG_LOG(X, Y) fprintf (g_file, #X ": Time:%s, File:%s(%d) " #Y  "\n", __TIMESTAMP__, __FILE__, __LINE__)
+
+FILE	*g_file;
 
 void	init_logger(char *filename, char *mode);
 void	close_logger(void);
