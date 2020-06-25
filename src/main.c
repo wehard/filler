@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 16:20:00 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/25 17:43:15 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_filler	*init_filler(void)
 	filler->map = NULL;
 	filler->heat_map = NULL;
 	filler->turn = 0;
+	filler->grid_size = 15;
 	return (filler);
 }
 
