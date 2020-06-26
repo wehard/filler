@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 17:36:33 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/26 19:55:37 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,18 @@ static double	distance_to(t_filler *filler, t_vec2 pos)
 	return (closest);
 }
 
-static int		discard(t_filler *filler, t_vec2i pos)
-{
-	t_map *map;
+// static int		discard(t_filler *filler, t_vec2i pos)
+// {
+// 	t_map *map;
 
-	map = filler->map;
-	if (pos.y > 0 && map->data[pos.y - 1][pos.x] == filler->opp &&
-		pos.y < map->height - 1 && map->data[pos.y + 1][pos.x] == filler->opp &&
-		pos.x > 0 && map->data[pos.y][pos.x - 1] == filler->opp &&
-		pos.x < map->width - 1 && map->data[pos.y][pos.x + 1] == filler->opp)
-		return (1);
-	return (0);
-}
+// 	map = filler->map;
+// 	if (pos.y > 0 && map->data[pos.y - 1][pos.x] == filler->opp &&
+// 		pos.y < map->height - 1 && map->data[pos.y + 1][pos.x] == filler->opp &&
+// 		pos.x > 0 && map->data[pos.y][pos.x - 1] == filler->opp &&
+// 		pos.x < map->width - 1 && map->data[pos.y][pos.x + 1] == filler->opp)
+// 		return (0);
+// 	return (0);
+// }
 
 int				get_score(t_filler *filler, t_vec2i pos)
 {
@@ -92,12 +92,12 @@ void			update_heat_map(t_filler *filler)
 		cur.x = 0;
 		while (cur.x < map->width)
 		{
-			if (hmap->data[cur.y * map->width + cur.x] == -1 ||
-					discard(filler, cur))
-				hmap->data[cur.y * map->width + cur.x] = -1;
-			else
-				hmap->data[cur.y * filler->map->width + cur.x] =
-					ft_max(1, distance_to(filler, ft_make_vec2(cur.x, cur.y)));
+			// if (hmap->data[cur.y * map->width + cur.x] == -1 ||
+			// 		discard(filler, cur))
+			// 	hmap->data[cur.y * map->width + cur.x] = -1;
+			// else
+			hmap->data[cur.y * filler->map->width + cur.x] =
+				distance_to(filler, ft_make_vec2(cur.x, cur.y));
 			cur.x++;
 		}
 		cur.y++;

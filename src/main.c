@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 20:18:36 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/26 19:41:08 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ void		output_pos(t_filler *filler, t_piece *piece, strategy_func func)
 	pos.y -= piece->min_offset.y;
 	if (filler->turn % 10 == 0)
 	{
-		DEBUG_LOG(INFO, "update player pos");
+		// DEBUG_LOG(INFO, "update player pos");
 		filler->player_last = pos;
 	}
+	print_heat_map(filler->heat_map->data, filler->heat_map->width, filler->heat_map->height);
 	ft_printf("%d %d\n", pos.y, pos.x);
 }
 
@@ -77,9 +78,9 @@ int			main(void)
 	char		*line;
 
 	filler = init_filler();
-	init_logger("debug.log", "a+");
+	// init_logger("debug.log", "a+");
 
-	DEBUG_LOG(INFO, "hello\n");
+	// DEBUG_LOG(INFO, "hello\n");
 	piece = NULL;
 	while (ft_get_next_line(STDIN, &line))
 	{
@@ -98,6 +99,6 @@ int			main(void)
 		}
 		free(line);
 	}
-	close_logger();
+	// close_logger();
 	return (0);
 }

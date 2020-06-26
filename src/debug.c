@@ -6,12 +6,14 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:58:03 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 20:16:54 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/26 19:41:54 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include "debug.h"
 
 void	init_logger(char *filename, char *mode)
@@ -31,7 +33,7 @@ void	debug_log(const char *format, ...)
 	va_list valist;
 
 	va_start(valist, format);
-	vfprintf(g_file, format, valist);
+	vdprintf(2, format, valist);
 	va_end(valist);
 }
 
