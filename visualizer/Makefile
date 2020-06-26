@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+         #
+#    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/03/13 10:50:29 by wkorande         ###   ########.fr        #
+#    Updated: 2020/06/26 15:15:12 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,15 +30,17 @@ LIBFT= ../libft
 
 FLAGS= #-Wall -Wextra -Werror
 
+CC=clang
+
 all: $(NAME)
 
 $(NAME):
 	make -C $(LIBFT)
-	gcc $(FLAGS) -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRC) -L$(LIBFT) -lft -lmlx -framework OpenGL -framework AppKit
+	$(CC) $(FLAGS) -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRC) -L$(LIBFT) -lft -lmlx -framework OpenGL -framework AppKit
 
 linux:
 	make -C $(LIBFT)
-	gcc -g $(FLAGS) -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRC) -L$(LIBFT) -lft -lmlx -lXext -lX11 -lm
+	$(CC) -g $(FLAGS) -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRC) -L$(LIBFT) -lft -lmlx -lXext -lX11 -lm
 
 clean:
 	@echo "Removing object files ..."
