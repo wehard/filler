@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/26 19:41:08 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/30 15:33:34 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		output_pos(t_filler *filler, t_piece *piece, strategy_func func)
 		// DEBUG_LOG(INFO, "update player pos");
 		filler->player_last = pos;
 	}
-	print_heat_map(filler->heat_map->data, filler->heat_map->width, filler->heat_map->height);
+	// print_heat_map(filler->heat_map->data, filler->heat_map->width, filler->heat_map->height);
 	ft_printf("%d %d\n", pos.y, pos.x);
 }
 
