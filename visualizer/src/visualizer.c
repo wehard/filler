@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visualizer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/13 11:18:54 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/30 18:19:05 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		read_player(t_env *env, char *line)
 		env->p2 = 'X';
 		env->p2_name = ft_strnew(ft_strlen(line));
 		ft_strcpy(env->p2_name, ft_strchr(line, '['));
-		ft_printf("p2: %s\n", env->p1_name);
+		ft_printf("p2: %s\n", env->p2_name);
 	}
 
 }

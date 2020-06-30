@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piece.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 15:29:42 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/30 20:14:31 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,13 @@ int	test_piece(t_filler *filler, t_piece *piece, t_vec2i pos)
 	t_vec2i p;
 
 	num_overlap = 0;
-	p.y = piece->min_offset.y;
+	p.y = 0;
 	m.y = pos.y;
-	while (m.y < pos.y + piece->height - piece->max_offset.y && p.y < piece->height - piece->max_offset.y)
+	while (p.y < piece->height - piece->max_offset.y)
 	{
-		p.x = piece->min_offset.x;
+		p.x = 0;
 		m.x = pos.x;
-		while (m.x < pos.x + piece->width - piece->max_offset.x && p.x < piece->width - piece->max_offset.x)
+		while (p.x < piece->width - piece->max_offset.x)
 		{
 			if (piece->data[p.y][p.x] == ASTERISK && filler->map->data[m.y][m.x] == filler->opp)
 				return (0);

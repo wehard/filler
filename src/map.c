@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 15:21:53 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/30 18:04:47 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_map *create_map(char *line)
 	map->width = ft_atoi(split[2]);
 	map->height = ft_atoi(split[1]);
 	map->data = make_area(map->width, map->height);
-	debug_log("map size: r%d c%d\n", map->height, map->width);
+	// debug_log("map size: r%d c%d\n", map->height, map->width);
 	return (map);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 19:58:03 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/06/30 20:17:59 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 	t_vec2i cur;
 	t_vec2i end;
 
-	end.y = filler->map->height - piece->height + piece->max_offset.y + 1;
-	end.x = filler->map->width - piece->width + piece->max_offset.x + 1;
+	end.y = filler->map->height - piece->height - piece->max_offset.y;
+	end.x = filler->map->width - piece->width - piece->max_offset.x;
 	cur.y = 0;
 	while (cur.y < end.y)
 	{
@@ -34,7 +34,8 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 		}
 		cur.y++;
 	}
-	debug_log("fallback failed!\n");
+	print_area(piece->data, piece->width, piece->height);
+	debug_log("top_left: fallback failed!\n");
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -43,21 +44,24 @@ static t_vec2i top_right(t_filler *filler, t_piece *piece)
 	t_vec2i cur;
 	t_vec2i end;
 
-	end.y = filler->map->height - piece->height + piece->max_offset.y + 1;
+	end.y = filler->map->height - ((piece->height - 1) + piece->max_offset.y);
 	end.x = 0;
 	cur.y = 0;
 	while (cur.y < end.y)
 	{
-		cur.x = filler->map->width - piece->width + piece->max_offset.x;
+		cur.x = filler->map->width - ((piece->width -1) + piece->max_offset.x);
 		while (cur.x >= end.x)
 		{
 			if (test_piece(filler, piece, cur))
+			{
 				return (cur);
+			}
 			cur.x--;
 		}
 		cur.y++;
 	}
-	debug_log("fallback failed!\n");
+	debug_log("top_right: fallback failed!\n");
+	print_area(piece->data, piece->width, piece->height);
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -80,7 +84,8 @@ static t_vec2i bottom_left(t_filler *filler, t_piece *piece)
 		}
 		cur.y--;
 	}
-	debug_log("fallback failed!\n");
+	debug_log("bottom_left: fallback failed!\n");
+	print_area(piece->data, piece->width, piece->height);
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -88,6 +93,7 @@ static t_vec2i bottom_right(t_filler *filler, t_piece *piece)
 {
 	t_vec2i cur;
 	t_vec2i end;
+
 	end.y = 0;
 	end.x = 0;
 	cur.y = filler->map->height - piece->height + piece->max_offset.y;
@@ -102,7 +108,8 @@ static t_vec2i bottom_right(t_filler *filler, t_piece *piece)
 		}
 		cur.y--;
 	}
-	debug_log("fallback failed!\n");
+	debug_log("bottom_right: fallback failed!\n");
+	print_area(piece->data, piece->width, piece->height);
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -156,10 +163,12 @@ int		check_opp_fill(t_filler *filler, int res)
 
 t_vec2i strategy_fallback(t_filler *filler, t_piece *piece)
 {
-	t_vec2 player_start = get_player_start(filler->player, filler);
-	t_vec2 opp_start = get_player_start(filler->opp, filler);
-	t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(opp_start, player_start));
+	//t_vec2 player_start = get_player_start(filler->player, filler);
+	//t_vec2 opp_start = get_player_start(filler->opp, filler);
+	//t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(player_start, opp_start));
 
+	return (top_left(filler, piece));
+	/*
 	if (dir.x < 0)
 	{
 		if (dir.y < 0)
@@ -175,7 +184,7 @@ t_vec2i strategy_fallback(t_filler *filler, t_piece *piece)
 			return (bottom_right(filler, piece));
 	}
 	debug_log("fallback failed!\n");
-	return (ft_make_vec2i(-1, -1));
+	*/
 }
 
 t_vec2i strategy_fallback_dir(t_filler *filler, t_piece *piece, int dir)
