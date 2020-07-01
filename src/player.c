@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:31:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/30 18:04:55 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 12:41:52 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void read_player_info(t_filler *filler, int n)
 		ft_panic("error: wrong player number!");
 	filler->player = player_number == 1 ? 'O' : 'X';
 	filler->opp = player_number == 1 ? 'X' : 'O';
-	// debug_log("you are: %c\n", filler->player);
-	// debug_log("opponent is: %c\n", filler->opp);
+	debug_log("you are: %c\n", filler->player);
+	debug_log("opponent is: %c\n", filler->opp);
 }
 
 t_vec2 get_player_start(char player, t_filler *filler)

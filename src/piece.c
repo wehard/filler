@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/30 20:14:31 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 13:34:43 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,21 +135,26 @@ int	test_piece(t_filler *filler, t_piece *piece, t_vec2i pos)
 	t_vec2i m;
 	t_vec2i p;
 
+	if (pos.x == 1 && pos.y == 20)
+	{
+		debug_log(".\n");
+	}
+
 	num_overlap = 0;
-	p.y = 0;
+	p.y = piece->min_offset.y;
 	m.y = pos.y;
 	while (p.y < piece->height - piece->max_offset.y)
 	{
-		p.x = 0;
+		p.x = piece->min_offset.x;
 		m.x = pos.x;
 		while (p.x < piece->width - piece->max_offset.x)
 		{
 			if (piece->data[p.y][p.x] == ASTERISK && filler->map->data[m.y][m.x] == filler->opp)
 				return (0);
-			if (filler->map->data[m.y][m.x] != '.' && piece->data[p.y][p.x] != '.')
+			if (piece->data[p.y][p.x] == ASTERISK && filler->map->data[m.y][m.x] == filler->player)
 				num_overlap++;
-			if (num_overlap > 1)
-				return (0);
+			//if (num_overlap > 1)
+			//	return (0);
 			p.x++;
 			m.x++;
 		}

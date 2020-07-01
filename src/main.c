@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/30 20:20:34 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 13:31:35 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void		output_pos(t_filler *filler, t_piece *piece, strategy_func func)
 	t_vec2i pos;
 
 	pos = func(filler, piece);
-	//pos.x -= piece->min_offset.x;
-	//pos.y -= piece->min_offset.y;
+	pos.x -= piece->min_offset.x;
+	pos.y -= piece->min_offset.y;
 	if (filler->turn % 10 == 0)
 	{
 		// DEBUG_LOG(INFO, "update player pos");

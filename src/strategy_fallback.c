@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/30 20:17:59 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 13:42:23 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,24 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 {
 	t_vec2i cur;
 	t_vec2i end;
+	t_vec2i piece_size;
 
-	end.y = filler->map->height - piece->height - piece->max_offset.y;
-	end.x = filler->map->width - piece->width - piece->max_offset.x;
+	piece_size.x = piece->width - piece->min_offset.x - piece->max_offset.x;
+	piece_size.y = piece->height - piece->min_offset.y - piece->max_offset.y;
+
+	end.y = filler->map->height - piece_size.y;
+	end.x = filler->map->width - piece_size.x;
+	debug_log("end.x %d end.y %d\n", end.x, end.y);
 	cur.y = 0;
-	while (cur.y < end.y)
+	while (cur.y <= end.y)
 	{
 		cur.x = 0;
-		while (cur.x < end.x)
+		while (cur.x <= end.x)
 		{
+			if (cur.x == 9 && cur.y == 21)
+			{
+				debug_log(".\n");
+			}
 			if (test_piece(filler, piece, cur))
 				return (cur);
 			cur.x++;
@@ -36,6 +45,7 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 	}
 	print_area(piece->data, piece->width, piece->height);
 	debug_log("top_left: fallback failed!\n");
+	debug_log("end.x %d end.y %d\n", end.x, end.y);
 	return(ft_make_vec2i(-1, -1));
 }
 
@@ -53,9 +63,7 @@ static t_vec2i top_right(t_filler *filler, t_piece *piece)
 		while (cur.x >= end.x)
 		{
 			if (test_piece(filler, piece, cur))
-			{
 				return (cur);
-			}
 			cur.x--;
 		}
 		cur.y++;
