@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:31:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 12:41:52 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 16:47:43 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,31 @@ void read_player_info(t_filler *filler, int n)
 		ft_panic("error: wrong player number!");
 	filler->player = player_number == 1 ? 'O' : 'X';
 	filler->opp = player_number == 1 ? 'X' : 'O';
-	debug_log("you are: %c\n", filler->player);
-	debug_log("opponent is: %c\n", filler->opp);
+	// debug_log("you are: %c\n", filler->player);
+	// debug_log("opponent is: %c\n", filler->opp);
 }
 
-t_vec2 get_player_start(char player, t_filler *filler)
+t_vec2i get_player_last_pos(char player, t_filler *filler)
+{
+	t_vec2i cur;
+
+	cur.y = 0;
+	while (cur.y < filler->map->height)
+	{
+		cur.x = 0;
+		while (cur.x < filler->map->width)
+		{
+			if (filler->map->data[cur.y][cur.x] == (char)ft_tolower(player))
+				return (cur);
+			cur.x++;
+		}
+		cur.y++;
+	}
+	debug_log("no last for %c found!\n", player);
+	return (get_player_start(player, filler));
+}
+
+t_vec2i get_player_start(char player, t_filler *filler)
 {
 	t_vec2i cur;
 
@@ -47,13 +67,13 @@ t_vec2 get_player_start(char player, t_filler *filler)
 				if (player == filler->player)
 				{
 					filler->player_start_set = 1;
-					filler->player_start = ft_make_vec2(cur.x, cur.y);
+					filler->player_start = cur;
 					return (filler->player_start);
 				}
 				else if (player == filler->opp)
 				{
 					filler->opp_start_set = 1;
-					filler->opp_start = ft_make_vec2(cur.x, cur.y);
+					filler->opp_start = cur;
 					return (filler->opp_start);
 				}
 			}
@@ -61,5 +81,5 @@ t_vec2 get_player_start(char player, t_filler *filler)
 		}
 		cur.y++;
 	}
-	return (ft_make_vec2(cur.x, cur.y));
+	return (cur);
 }

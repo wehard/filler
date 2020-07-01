@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 15:00:13 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 17:02:50 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_filler	*init_filler(void)
 		return (NULL);
 	}
 	filler->player_start_set = 0;
-	filler->player_start = ft_make_vec2(-1, -1);
+	filler->player_start = ft_make_vec2i(-1, -1);
 	filler->opp_start_set = 0;
-	filler->opp_start = ft_make_vec2(-1, -1);
+	filler->opp_start = ft_make_vec2i(-1, -1);
 	filler->spider_radius = 0;
 	filler->spider_angle = 0;
 	filler->spider_spread = 90;
@@ -60,14 +60,13 @@ void		output_pos(t_filler *filler, t_piece *piece, strategy_func func)
 	t_vec2i pos;
 
 	pos = func(filler, piece);
+	filler->player_last = pos;
 	pos.x -= piece->min_offset.x;
 	pos.y -= piece->min_offset.y;
-	if (filler->turn % 10 == 0)
-	{
-		// DEBUG_LOG(INFO, "update player pos");
-		filler->player_last = pos;
-	}
+	
+	// filler->opp_last = get_player_last_pos(filler->opp, filler);
 	// print_heat_map(filler->heat_map->data, filler->heat_map->width, filler->heat_map->height);
+	// print_area(filler->map->data, filler->map->width, filler->map->height);
 	ft_printf("%d %d\n", pos.y, pos.x);
 }
 

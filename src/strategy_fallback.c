@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 14:12:47 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 17:20:33 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 		cur.y++;
 	}
 	print_area(piece->data, piece->width, piece->height);
-	// debug_log("top_left: fallback failed!\n");
-	// debug_log("end.x %d end.y %d\n", end.x, end.y);
+	print_area(filler->map->data, filler->map->width, filler->map->height);
 	return(ft_make_vec2i(-99, -99));
 }
 
@@ -48,13 +47,17 @@ static t_vec2i top_right(t_filler *filler, t_piece *piece)
 {
 	t_vec2i cur;
 	t_vec2i end;
+	t_vec2i piece_size;
 
-	end.y = filler->map->height - ((piece->height - 1) + piece->max_offset.y);
+	piece_size.x = piece->width - piece->min_offset.x - piece->max_offset.x;
+	piece_size.y = piece->height - piece->min_offset.y - piece->max_offset.y;
+
+	end.y = filler->map->height - piece_size.y;
 	end.x = 0;
 	cur.y = 0;
-	while (cur.y < end.y)
+	while (cur.y <= end.y)
 	{
-		cur.x = filler->map->width - ((piece->width -1) + piece->max_offset.x);
+		cur.x = filler->map->width - piece_size.x;
 		while (cur.x >= end.x)
 		{
 			if (test_piece(filler, piece, cur))
@@ -72,14 +75,18 @@ static t_vec2i bottom_left(t_filler *filler, t_piece *piece)
 {
 	t_vec2i cur;
 	t_vec2i end;
+	t_vec2i piece_size;
+
+	piece_size.x = piece->width - piece->min_offset.x - piece->max_offset.x;
+	piece_size.y = piece->height - piece->min_offset.y - piece->max_offset.y;
 
 	end.y = 0;
-	end.x = filler->map->width - piece->width + piece->max_offset.x + 1;
-	cur.y = filler->map->height - piece->height + piece->max_offset.y;
+	end.x = filler->map->width - piece_size.x;
+	cur.y = filler->map->height - piece_size.y;
 	while (cur.y >= end.y)
 	{
 		cur.x = 0;
-		while (cur.x < end.x)
+		while (cur.x <= end.x)
 		{
 			if (test_piece(filler, piece, cur))
 				return (cur);
@@ -96,13 +103,17 @@ static t_vec2i bottom_right(t_filler *filler, t_piece *piece)
 {
 	t_vec2i cur;
 	t_vec2i end;
+	t_vec2i piece_size;
+
+	piece_size.x = piece->width - piece->min_offset.x - piece->max_offset.x;
+	piece_size.y = piece->height - piece->min_offset.y - piece->max_offset.y;
 
 	end.y = 0;
 	end.x = 0;
-	cur.y = filler->map->height - piece->height + piece->max_offset.y;
+	cur.y = filler->map->height - piece_size.y;
 	while (cur.y >= end.y)
 	{
-		cur.x = filler->map->width - piece->width + piece->max_offset.x;
+		cur.x = filler->map->width - piece_size.x;
 		while (cur.x >= end.x)
 		{
 			if (test_piece(filler, piece, cur))
@@ -167,28 +178,7 @@ int		check_opp_fill(t_filler *filler, int res)
 t_vec2i strategy_fallback(t_filler *filler, t_piece *piece)
 {
 	debug_log("fallback\n");
-	//t_vec2 player_start = get_player_start(filler->player, filler);
-	//t_vec2 opp_start = get_player_start(filler->opp, filler);
-	//t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(player_start, opp_start));
-
 	return (top_left(filler, piece));
-	/*
-	if (dir.x < 0)
-	{
-		if (dir.y < 0)
-			return (top_left(filler, piece));
-		else
-			return (bottom_left(filler, piece));
-	}
-	else
-	{
-		if (dir.y < 0)
-			return (top_right(filler, piece));
-		else
-			return (bottom_right(filler, piece));
-	}
-	debug_log("fallback failed!\n");
-	*/
 }
 
 t_vec2i strategy_fallback_dir(t_filler *filler, t_piece *piece, int dir)

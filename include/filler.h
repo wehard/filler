@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 19:14:55 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 16:57:35 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ typedef struct	s_filler
 {
 	char		player;
 	int			player_start_set;
-	t_vec2		player_start;
+	t_vec2i		player_start;
 	char		opp;
-	t_vec2		opp_start;
+	t_vec2i		opp_start;
 	int			opp_start_set;
 	t_map		*map;
 	t_heat_map	*heat_map;
@@ -76,6 +76,7 @@ typedef struct	s_filler
 	int			turn;
 	int			grid_size;
 	t_vec2i		player_last;
+	t_vec2i		opp_last;
 }				t_filler;
 
 typedef struct	s_search_info
@@ -105,10 +106,10 @@ t_piece 		*read_piece(char *line);
 int				test_piece(t_filler *filler, t_piece *piece, t_vec2i pos);
 
 void			read_player_info(t_filler *filler, int n);
-t_vec2			get_player_start(char player, t_filler *filler);
+t_vec2i			get_player_start(char player, t_filler *filler);
+t_vec2i			get_player_last_pos(char player, t_filler *filler);
 
 t_vec2i			calc_piece_offset(t_piece piece);
-t_vec2i			get_position(t_filler *filler, t_piece piece);
 
 t_vec2i			strategy_grid(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_fallback(t_filler *filler, t_piece *piece);
@@ -120,4 +121,6 @@ int				search_radius(t_filler *filler, t_piece *piece, t_search_info info, t_vec
 int				search_area(t_filler *filler, t_piece *piece, t_search_info info, t_vec2 *valid_pos);
 t_vec2 			search_opp(t_filler *filler, t_vec2 pos);
 int				check_opp_fill(t_filler *filler, int res);
+int				get_distance_to_opp(t_filler *filler, t_vec2i pos);
+
 #endif

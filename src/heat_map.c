@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 14:56:10 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 16:58:05 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_heat_map		*create_heat_map(int width, int height)
 	return (heat_map);
 }
 
-static int	distance_to(t_filler *filler, t_vec2 pos)
+int	get_distance_to_opp(t_filler *filler, t_vec2i pos)
 {
 	t_vec2i	cur;
 	int	closest;
@@ -98,7 +98,7 @@ void			update_heat_map(t_filler *filler)
 			// 	hmap->data[cur.y * map->width + cur.x] = -1;
 			// else
 			hmap->data[cur.y * filler->map->width + cur.x] =
-				distance_to(filler, ft_make_vec2(cur.x, cur.y));
+				get_distance_to_opp(filler, cur);
 			cur.x++;
 		}
 		cur.y++;
