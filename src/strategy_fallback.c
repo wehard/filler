@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 13:42:23 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 14:12:47 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,12 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 
 	end.y = filler->map->height - piece_size.y;
 	end.x = filler->map->width - piece_size.x;
-	debug_log("end.x %d end.y %d\n", end.x, end.y);
 	cur.y = 0;
 	while (cur.y <= end.y)
 	{
 		cur.x = 0;
 		while (cur.x <= end.x)
 		{
-			if (cur.x == 9 && cur.y == 21)
-			{
-				debug_log(".\n");
-			}
 			if (test_piece(filler, piece, cur))
 				return (cur);
 			cur.x++;
@@ -44,9 +39,9 @@ static t_vec2i top_left(t_filler *filler, t_piece *piece)
 		cur.y++;
 	}
 	print_area(piece->data, piece->width, piece->height);
-	debug_log("top_left: fallback failed!\n");
-	debug_log("end.x %d end.y %d\n", end.x, end.y);
-	return(ft_make_vec2i(-1, -1));
+	// debug_log("top_left: fallback failed!\n");
+	// debug_log("end.x %d end.y %d\n", end.x, end.y);
+	return(ft_make_vec2i(-99, -99));
 }
 
 static t_vec2i top_right(t_filler *filler, t_piece *piece)
@@ -171,6 +166,7 @@ int		check_opp_fill(t_filler *filler, int res)
 
 t_vec2i strategy_fallback(t_filler *filler, t_piece *piece)
 {
+	debug_log("fallback\n");
 	//t_vec2 player_start = get_player_start(filler->player, filler);
 	//t_vec2 opp_start = get_player_start(filler->opp, filler);
 	//t_vec2 dir = ft_normalize_vec2(ft_sub_vec2(player_start, opp_start));

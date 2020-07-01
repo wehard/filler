@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/26 19:55:37 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 14:56:10 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ t_heat_map		*create_heat_map(int width, int height)
 	return (heat_map);
 }
 
-static double	distance_to(t_filler *filler, t_vec2 pos)
+static int	distance_to(t_filler *filler, t_vec2 pos)
 {
 	t_vec2i	cur;
-	double	closest;
-	double	d;
+	int	closest;
+	t_vec2i	d;
 
-	closest = 1000.0;
+	closest = 100000;
 	cur.y = 0;
 	while (cur.y < filler->map->height)
 	{
@@ -47,10 +47,11 @@ static double	distance_to(t_filler *filler, t_vec2 pos)
 		{
 			if (filler->map->data[cur.y][cur.x] == filler->opp)
 			{
-				d = ft_len_vec2(ft_sub_vec2(ft_make_vec2(cur.x, cur.y), pos));
-				if (d < closest)
+				d.x = cur.x < pos.x ? pos.x - cur.x : cur.x - pos.x;
+				d.y = cur.y < pos.y ? pos.y - cur.y : cur.y - pos.y;
+				if (d.x + d.y < closest)
 				{
-					closest = d;
+					closest = d.x + d.y;
 				}
 			}
 			cur.x++;

@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 13:31:35 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/01 15:00:13 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			main(void)
 		else if (ft_strncmp(line, "Piece", 5) == 0)
 		{
 			if ((piece = read_piece(line)) && ++filler->turn)
-				output_pos(filler, piece, strategy_fallback);
+				output_pos(filler, piece, strategy_heat);
 		}
 		free(line);
 	}
