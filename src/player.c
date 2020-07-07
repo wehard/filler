@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:31:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 16:47:43 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/07 13:19:24 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 #include "libft.h"
 #include "debug.h"
 
-void read_player_info(t_filler *filler, int n)
+void	read_player_info(t_filler *filler, int n)
 {
 	int player_number;
+
 	player_number = n;
 	if (player_number < 1 || player_number > 2)
 		ft_panic("error: wrong player number!");
 	filler->player = player_number == 1 ? 'O' : 'X';
 	filler->opp = player_number == 1 ? 'X' : 'O';
-	// debug_log("you are: %c\n", filler->player);
-	// debug_log("opponent is: %c\n", filler->opp);
 }
 
-t_vec2i get_player_last_pos(char player, t_filler *filler)
+t_vec2i	get_player_last_pos(char player, t_filler *filler)
 {
 	t_vec2i cur;
 
@@ -46,7 +45,7 @@ t_vec2i get_player_last_pos(char player, t_filler *filler)
 	return (get_player_start(player, filler));
 }
 
-t_vec2i get_player_start(char player, t_filler *filler)
+t_vec2i	get_player_start(char player, t_filler *filler)
 {
 	t_vec2i cur;
 
@@ -54,7 +53,6 @@ t_vec2i get_player_start(char player, t_filler *filler)
 		return (filler->player_start);
 	if (player == filler->opp && filler->opp_start_set)
 		return (filler->opp_start);
-	cur.x = 0;
 	cur.y = 0;
 	while (cur.y < filler->map->height)
 	{
@@ -63,7 +61,6 @@ t_vec2i get_player_start(char player, t_filler *filler)
 		{
 			if (filler->map->data[cur.y][cur.x] == player)
 			{
-				debug_log("player %c start: r%d c%d\n", player, cur.y, cur.x);
 				if (player == filler->player)
 				{
 					filler->player_start_set = 1;

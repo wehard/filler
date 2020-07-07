@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/30 18:04:47 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/07 13:15:50 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "debug.h"
 #include "math.h"
 
-t_map *create_map(char *line)
+t_map	*create_map(char *line)
 {
 	t_map	*map;
 	char	**split;
@@ -28,14 +28,13 @@ t_map *create_map(char *line)
 	map->width = ft_atoi(split[2]);
 	map->height = ft_atoi(split[1]);
 	map->data = make_area(map->width, map->height);
-	// debug_log("map size: r%d c%d\n", map->height, map->width);
 	return (map);
 }
 
-void read_map_state(t_map *map)
+void	read_map_state(t_map *map)
 {
 	char *line;
 
-	ft_get_next_line(STDIN, &line); // Skip first because it just has unnecessary stuff
+	ft_get_next_line(STDIN, &line);
 	populate_area(map->data, map->width, map->height, 4);
 }

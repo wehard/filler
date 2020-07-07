@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:09:33 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 16:58:05 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/07 13:17:16 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "debug.h"
 #include "libft.h"
 
-t_heat_map		*create_heat_map(int width, int height)
+t_heat_map	*create_heat_map(int width, int height)
 {
 	t_heat_map	*heat_map;
 	int			i;
@@ -32,10 +32,10 @@ t_heat_map		*create_heat_map(int width, int height)
 	return (heat_map);
 }
 
-int	get_distance_to_opp(t_filler *filler, t_vec2i pos)
+int			get_distance_to_opp(t_filler *filler, t_vec2i pos)
 {
 	t_vec2i	cur;
-	int	closest;
+	int		closest;
 	t_vec2i	d;
 
 	closest = 100000;
@@ -61,25 +61,12 @@ int	get_distance_to_opp(t_filler *filler, t_vec2i pos)
 	return (closest);
 }
 
-// static int		discard(t_filler *filler, t_vec2i pos)
-// {
-// 	t_map *map;
-
-// 	map = filler->map;
-// 	if (pos.y > 0 && map->data[pos.y - 1][pos.x] == filler->opp &&
-// 		pos.y < map->height - 1 && map->data[pos.y + 1][pos.x] == filler->opp &&
-// 		pos.x > 0 && map->data[pos.y][pos.x - 1] == filler->opp &&
-// 		pos.x < map->width - 1 && map->data[pos.y][pos.x + 1] == filler->opp)
-// 		return (0);
-// 	return (0);
-// }
-
-int				get_score(t_filler *filler, t_vec2i pos)
+int			get_score(t_filler *filler, t_vec2i pos)
 {
 	return (filler->heat_map->data[pos.y * filler->map->width + pos.x]);
 }
 
-void			update_heat_map(t_filler *filler)
+void		update_heat_map(t_filler *filler)
 {
 	t_vec2i		cur;
 	t_map		*map;
@@ -93,10 +80,6 @@ void			update_heat_map(t_filler *filler)
 		cur.x = 0;
 		while (cur.x < map->width)
 		{
-			// if (hmap->data[cur.y * map->width + cur.x] == -1 ||
-			// 		discard(filler, cur))
-			// 	hmap->data[cur.y * map->width + cur.x] = -1;
-			// else
 			hmap->data[cur.y * filler->map->width + cur.x] =
 				get_distance_to_opp(filler, cur);
 			cur.x++;

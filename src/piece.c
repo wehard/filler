@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 14:11:00 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/07 13:23:02 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "debug.h"
 #include <stdlib.h>
 
-int left_offset(t_piece p)
+int		left_offset(t_piece p)
 {
 	t_vec2i cur;
 
@@ -35,7 +35,7 @@ int left_offset(t_piece p)
 	return (0);
 }
 
-int right_offset(t_piece p)
+int	right_offset(t_piece p)
 {
 	t_vec2i cur;
 
@@ -54,7 +54,7 @@ int right_offset(t_piece p)
 	return (0);
 }
 
-int top_offset(t_piece p)
+int		top_offset(t_piece p)
 {
 	t_vec2i cur;
 
@@ -73,7 +73,7 @@ int top_offset(t_piece p)
 	return (0);
 }
 
-int bottom_offset(t_piece p)
+int		bottom_offset(t_piece p)
 {
 	t_vec2i cur;
 
@@ -92,7 +92,7 @@ int bottom_offset(t_piece p)
 	return (0);
 }
 
-t_vec2i calc_piece_min_offset(t_piece piece)
+t_vec2i	calc_piece_min_offset(t_piece piece)
 {
 	t_vec2i offset;
 
@@ -101,7 +101,7 @@ t_vec2i calc_piece_min_offset(t_piece piece)
 	return (offset);
 }
 
-t_vec2i calc_piece_max_offset(t_piece piece)
+t_vec2i	calc_piece_max_offset(t_piece piece)
 {
 	t_vec2i offset;
 
@@ -110,7 +110,7 @@ t_vec2i calc_piece_max_offset(t_piece piece)
 	return (offset);
 }
 
-t_piece *read_piece(char *line)
+t_piece	*read_piece(char *line)
 {
 	t_piece *piece;
 	char **split;
@@ -158,4 +158,3 @@ int	test_piece(t_filler *filler, t_piece *piece, t_vec2i pos)
 	}
 	return (num_overlap == 1);
 }
-
