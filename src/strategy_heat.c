@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 17:15:14 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/08 15:02:04 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int		piece_score(t_filler *filler, t_piece *piece, t_vec2i pos)
 
 	piece_size.x = piece->width - piece->min_offset.x - piece->max_offset.x;
 	piece_size.y = piece->height - piece->min_offset.y - piece->max_offset.y;
-
-
 	score = 0;
 	m.y = pos.y;
 	p.y = piece->height - piece->min_offset.y;
