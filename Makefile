@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/07/10 14:38:13 by wkorande         ###   ########.fr        #
+#    Updated: 2020/07/10 16:20:57 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SRC = main.c\
 	area.c\
 	debug.c\
 	map.c\
-	heat_map.c\
 	piece.c\
 	piece_offset.c\
 	player.c\
