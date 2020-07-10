@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/10 16:34:28 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/10 16:38:04 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,5 @@ int				search_radius(t_filler *f, t_piece *pc, t_search_info info,
 	t_vec2 *valid_pos);
 int				search_area(t_filler *f, t_piece *pc, t_search_info info,
 	t_vec2 *valid_pos);
-t_vec2			search_opp(t_filler *f, t_vec2 pos);
 
 #endif
