@@ -6,16 +6,14 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:06:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/06/25 20:16:50 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/10 16:25:57 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEBUG_H
 # define DEBUG_H
 
-#include <stdio.h>
-
-#define DEBUG_LOG(X, Y) fprintf (g_file, #X ": Time:%s, File:%s(%d) " #Y  "\n", __TIMESTAMP__, __FILE__, __LINE__)
+# include <stdio.h>
 
 FILE	*g_file;
 
