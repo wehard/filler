@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/10 16:33:25 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/10 16:34:28 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void			calc_piece_offset(t_piece *pc);
 t_vec2i			strategy_heat(t_filler *f, t_piece *pc);
 t_vec2i			strategy_grid(t_filler *f, t_piece *pc);
 t_vec2i			strategy_fallback(t_filler *f, t_piece *pc);
-t_vec2i			strategy_circ_search(t_filler *f, t_piece *pc);
 int				search_radius(t_filler *f, t_piece *pc, t_search_info info,
 	t_vec2 *valid_pos);
 int				search_area(t_filler *f, t_piece *pc, t_search_info info,

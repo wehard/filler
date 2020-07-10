@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/07/10 16:23:46 by wkorande         ###   ########.fr        #
+#    Updated: 2020/07/10 16:35:00 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ SRC = main.c\
 	search.c\
 	strategy_fallback.c\
 	strategy_grid.c\
-	strategy_heat.c\
-	strategy_circ_search.c
+	strategy_heat.c
 
 SRCDIR = src
 
