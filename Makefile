@@ -6,13 +6,11 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/07/10 16:20:57 by wkorande         ###   ########.fr        #
+#    Updated: 2020/07/10 16:23:46 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wkorande.filler
-
-CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c\
 	area.c\
@@ -37,18 +35,18 @@ INCL = include
 
 LIBFT=libft
 
-FLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror
 
 CC=clang
 
 all: $(NAME)
 
 $(NAME): libft
-	$(CC) $(FLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm -O2
+	$(CC) $(CFLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm -O2
 
 debug: libft
 	make -C libft
-	$(CC) -g $(FLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
+	$(CC) -g $(CFLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
 
 libft:
 	make -C libft
