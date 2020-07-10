@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/06/26 15:14:38 by wkorande         ###   ########.fr        #
+#    Updated: 2020/07/10 14:38:13 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = main.c\
 	map.c\
 	heat_map.c\
 	piece.c\
+	piece_offset.c\
 	player.c\
 	search.c\
 	strategy_fallback.c\
@@ -43,13 +44,15 @@ CC=clang
 
 all: $(NAME)
 
-$(NAME):
-	make -C libft
+$(NAME): libft
 	$(CC) $(FLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm -O2
 
-debug:
+debug: libft
 	make -C libft
 	$(CC) -g $(FLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
+
+libft:
+	make -C libft
 
 clean:
 	@printf "Removing objects\n"

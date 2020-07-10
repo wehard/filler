@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:07:46 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 16:11:59 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/10 15:38:29 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_vec2i strategy_grid(t_filler *filler, t_piece *piece)
 	int grid_size = filler->grid_size;
 
 
-	t_vec2i player_start = get_player_start(filler->player, filler);
+	t_vec2i player_start = get_player_start(filler->pl, filler);
 	t_vec2i opp_start = get_player_start(filler->opp, filler);
 	t_vec2i dir;
 	

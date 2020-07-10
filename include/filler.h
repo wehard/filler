@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/01 16:57:35 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/10 15:38:22 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct	s_piece
 	t_vec2i		min_offset;
 	t_vec2i		max_offset;
 	char		**data;
+	int			num_overlap;
 }				t_piece;
 
 typedef struct	s_player
@@ -57,7 +58,7 @@ typedef struct	s_player
 
 typedef struct	s_filler
 {
-	char		player;
+	char		pl;
 	int			player_start_set;
 	t_vec2i		player_start;
 	char		opp;
@@ -109,7 +110,7 @@ void			read_player_info(t_filler *filler, int n);
 t_vec2i			get_player_start(char player, t_filler *filler);
 t_vec2i			get_player_last_pos(char player, t_filler *filler);
 
-t_vec2i			calc_piece_offset(t_piece piece);
+void			calc_piece_offset(t_piece *piece);
 
 t_vec2i			strategy_grid(t_filler *filler, t_piece *piece);
 t_vec2i			strategy_fallback(t_filler *filler, t_piece *piece);
