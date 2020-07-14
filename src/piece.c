@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/14 20:40:03 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/14 21:03:19 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ t_piece	*read_piece(char *line)
 	calc_piece_offset(piece);
 	piece->best_score = INT32_MAX;
 	return (piece);
+}
+
+void	destroy_piece(t_piece *pc)
+{
+	destroy_area(pc->data, pc->height);
+	free(pc);
 }
 
 int		test_piece(t_filler *f, t_piece *pc, t_vec2i pos)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   area.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:35:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/12 14:12:06 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/14 21:04:55 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ char	**make_area(int width, int height)
 	char	**area;
 	int		y;
 
-	area = (char**)malloc(sizeof(char*) * height);
+	if (!(area = (char**)malloc(sizeof(char*) * height)))
+		ft_panic("make_aread: malloc failed!");
 	y = 0;
 	while (y < height)
 	{
-		area[y] = (char*)malloc(sizeof(char) * width);
+		if (!(area[y] = (char*)malloc(sizeof(char) * width)))
+			ft_panic("make_aread: malloc failed!");
 		ft_bzero(area[y], width);
 		y++;
 	}
@@ -46,4 +48,14 @@ void	populate_area(char **area, int width, int height, int line_offset)
 		free(line);
 		row++;
 	}
+}
+
+void	destroy_area(char **area, int rows)
+{
+	int row;
+
+	row = 0;
+	while (row < rows)
+		free(area[row]);
+	free(area);
 }
