@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 14:08:01 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/10 16:19:53 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/14 20:42:48 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,38 +111,31 @@ int			piece_score(t_filler *filler, t_piece *piece, t_vec2i pos)
 	return (score);
 }
 
-t_vec2i		strategy_heat(t_filler *filler, t_piece *pc)
+t_vec2i		strategy_heat(t_filler *f, t_piece *pc)
 {
 	t_vec2i cur;
-	t_vec2i best_pos;
-	int		best_score;
-	int		cur_score;
 	int		found_pos;
-	t_vec2i pc_size;
 
-	pc_size.x = pc->width - pc->min_offset.x - pc->max_offset.x;
-	pc_size.y = pc->height - pc->min_offset.y - pc->max_offset.y;
-	update_heat_map(filler);
-	found_pos = 0;
-	best_score = 10000;
+	update_heat_map(f);
+	found_pos = FALSE;
 	cur.y = 0;
-	while (cur.y < filler->map->height - pc_size.y + 1)
+	while (cur.y < f->map->height - pc->act_size.y + 1)
 	{
 		cur.x = 0;
-		while (cur.x < filler->map->width - pc_size.x + 1)
+		while (cur.x < f->map->width - pc->act_size.x + 1)
 		{
-			cur_score = piece_score(filler, pc, cur);
-			if (cur_score < best_score && test_piece(filler, pc, cur))
+			pc->cur_score = piece_score(f, pc, cur);
+			if (pc->cur_score < pc->best_score && test_piece(f, pc, cur))
 			{
-				best_pos = cur;
-				best_score = cur_score;
-				found_pos = 1;
+				pc->best_pos = cur;
+				pc->best_score = pc->cur_score;
+				found_pos = TRUE;
 			}
 			cur.x++;
 		}
 		cur.y++;
 	}
 	if (found_pos)
-		return (best_pos);
-	return (strategy_fallback(filler, pc));
+		return (pc->best_pos);
+	return (strategy_fallback(f, pc));
 }

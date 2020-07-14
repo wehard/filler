@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/10 14:35:19 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/10 14:48:42 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/14 20:32:04 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,12 @@ static int	bottom_offset(t_piece p)
 	return (0);
 }
 
-void		calc_piece_offset(t_piece *piece)
+void		calc_piece_offset(t_piece *pc)
 {
-	piece->min_offset.x = left_offset(*piece);
-	piece->min_offset.y = top_offset(*piece);
-	piece->max_offset.x = right_offset(*piece);
-	piece->max_offset.y = bottom_offset(*piece);
+	pc->min_offset.x = left_offset(*pc);
+	pc->min_offset.y = top_offset(*pc);
+	pc->max_offset.x = right_offset(*pc);
+	pc->max_offset.y = bottom_offset(*pc);
+	pc->act_size.x = pc->width - pc->min_offset.x - pc->max_offset.x;
+	pc->act_size.y = pc->height - pc->min_offset.y - pc->max_offset.y;
 }

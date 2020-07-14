@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/10 16:38:04 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/14 20:36:09 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define DIR_TOPRIGHT 1
 # define DIR_BOTTOMLEFT 2
 # define DIR_BOTTOMRIGHT 3
+# define FALSE 0
+# define TRUE 1
 
 typedef struct	s_map
 {
@@ -46,6 +48,10 @@ typedef struct	s_piece
 	t_vec2i		max_offset;
 	char		**data;
 	int			num_overlap;
+	t_vec2i		act_size;
+	int			cur_score;
+	int			best_score;
+	t_vec2i		best_pos;
 }				t_piece;
 
 typedef struct	s_player
