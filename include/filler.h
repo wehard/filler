@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/15 17:51:07 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/15 17:57:57 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,14 @@ t_map			*create_map(char *line);
 char			**make_area(int width, int height);
 void			populate_area(char **area, int width, int height,
 	int line_offset);
+void			destroy_area(char **area, int rows);
 t_heat_map		*create_heat_map(int width, int height);
 void			update_heat_map(t_filler *f);
 int				get_score(t_filler *f, t_vec2i pos);
 void			read_map_state(t_map *map);
 t_piece			*read_piece(char *line);
 int				test_piece(t_filler *f, t_piece *pc, t_vec2i pos);
+void			destroy_piece(t_piece *pc);
 void			read_player_info(t_filler *f, int n);
 t_vec2i			get_player_start(char player, t_filler *f);
 t_vec2i			get_player_last_pos(char player, t_filler *f);
