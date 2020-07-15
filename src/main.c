@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/07 13:20:35 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/15 17:51:47 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		init_map(t_filler *filler, char *line)
 	filler->heat_map = create_heat_map(filler->map->width, filler->map->height);
 }
 
-void		output_pos(t_filler *filler, t_piece *piece, strategy_func func)
+void		output_pos(t_filler *filler, t_piece *piece, t_strategy_func func)
 {
 	t_vec2i pos;
 
