@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 20:20:14 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/10 22:35:57 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/18 22:19:20 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "ft_printf.h"
 #include <stdlib.h>
 
-t_map *create_map(int width, int height)
+t_map	*create_map(int width, int height)
 {
-	t_map *map;
-	int y;
+	t_map	*map;
+	int		y;
 
 	map = (t_map*)malloc(sizeof(t_map));
 	map->width = width;

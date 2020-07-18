@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/06/26 15:15:12 by wkorande         ###   ########.fr        #
+#    Updated: 2020/07/18 22:01:49 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRCS = visualizer.c\
 		env.c\
-		map.c
+		map.c\
+		draw.c\
+		read.c
 
 SRCDIR = src
 

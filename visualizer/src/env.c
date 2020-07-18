@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:30:56 by wkorande          #+#    #+#             */
-/*   Updated: 2020/03/11 11:31:44 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/07/18 22:20:56 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,10 @@ void		del_env_exit(t_env *env)
 	exit(EXIT_SUCCESS);
 }
 
-int 		close_window(void *param)
+int			close_window(void *param)
 {
 	(void)param;
 	exit(EXIT_SUCCESS);
-}
-
-void		ft_panic(char *message)
-{
-	ft_printf("panic: %s\n", message);
-	exit(EXIT_FAILURE);
 }
 
 t_mlx_img	*create_mlx_image(t_env *env, int width, int height)
