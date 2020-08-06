@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:30:56 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/18 22:20:56 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/06 17:57:29 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void		del_env_exit(t_env *env)
 {
 	mlx_destroy_image(env->mlx->mlx_ptr, env->mlx_img->img);
 	mlx_destroy_window(env->mlx->mlx_ptr, env->mlx->win_ptr);
+	free(env->p1_name);
+	free(env->p2_name);
 	free(env->mlx_img);
 	free(env->mlx);
 	free(env);

@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:32:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/14 21:03:19 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/06 17:32:57 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_piece	*read_piece(char *line)
 {
 	t_piece	*piece;
 	char	**split;
+	int		i;
 
 	if (!(piece = (t_piece*)malloc(sizeof(t_piece))))
 		ft_panic("read_piece: malloc failed!");
@@ -33,6 +34,13 @@ t_piece	*read_piece(char *line)
 	populate_area(piece->data, piece->width, piece->height, 0);
 	calc_piece_offset(piece);
 	piece->best_score = INT32_MAX;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 	return (piece);
 }
 

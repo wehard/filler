@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/07 13:15:50 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/06 17:32:05 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_map	*create_map(char *line)
 {
 	t_map	*map;
 	char	**split;
+	int		i;
 
 	if (!(map = (t_map*)malloc(sizeof(t_map))))
 		ft_panic("create_map: malloc failed!");
@@ -28,6 +29,13 @@ t_map	*create_map(char *line)
 	map->width = ft_atoi(split[2]);
 	map->height = ft_atoi(split[1]);
 	map->data = make_area(map->width, map->height);
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 	return (map);
 }
 
@@ -37,4 +45,5 @@ void	read_map_state(t_map *map)
 
 	ft_get_next_line(STDIN, &line);
 	populate_area(map->data, map->width, map->height, 4);
+	free(line);
 }

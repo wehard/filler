@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:56:44 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/15 17:57:56 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/06 17:40:30 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		output_pos(t_filler *filler, t_piece *piece, t_strategy_func func)
 	filler->player_last = pos;
 	pos.x -= piece->min_offset.x;
 	pos.y -= piece->min_offset.y;
-	// destroy_piece(piece);
+	destroy_piece(piece);
 	ft_printf("%d %d\n", pos.y, pos.x);
 }
 

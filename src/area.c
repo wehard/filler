@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:35:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/14 21:04:55 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/06 17:26:06 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	destroy_area(char **area, int rows)
 
 	row = 0;
 	while (row < rows)
-		free(area[row]);
+		free(area[row++]);
 	free(area);
 }

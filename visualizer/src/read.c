@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/18 21:47:31 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/18 22:21:39 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/06 18:03:59 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ void	read_map(t_map *map)
 	char	*line;
 	int		row;
 
+	line = NULL;
 	if (!map)
 		ft_panic("map is null!");
 	ft_get_next_line(0, &line);
+	free(line);
 	row = 0;
-	while (row < map->height && ft_get_next_line(0, &line))
+	while (row < map->height && ft_get_next_line(0, &line) > 0)
 	{
 		if (line == NULL)
 			continue;
@@ -55,6 +57,19 @@ void	read_map(t_map *map)
 		free(line);
 		row++;
 	}
+}
+
+static void	free_split(char **split)
+{
+	int i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
 
 void	read_output(t_env *env)
@@ -67,18 +82,20 @@ void	read_output(t_env *env)
 		ft_printf("env is null!\n");
 		return ;
 	}
-	while (ft_get_next_line(0, &line) == 1)
+	while (ft_get_next_line(0, &line) > 0)
 	{
 		if (ft_strncmp(line, "$$$", 3) == 0)
 			read_player(env, line);
 		if (ft_strncmp(line, "Plateau", 7) == 0)
 		{
-			if (env->map == NULL)
+			if (env->map)
+				read_map(env->map);
+			else
 			{
 				split = ft_strsplit(line, ' ');
 				env->map = create_map(ft_atoi(split[2]), ft_atoi(split[1]));
+				free_split(split);
 			}
-			read_map(env->map);
 		}
 		if (ft_strncmp(line, "Piece", 5) == 0)
 		{

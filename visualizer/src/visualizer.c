@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:49:25 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/18 22:20:01 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/06 17:46:48 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int		main(void)
 {
 	t_env	*env;
 
-	env = init_env(1280, 720, "filler");
+	if (!(env = init_env(1280, 720, "filler")))
+		ft_panic("failed to init visualizer!");
 	mlx_hook(env->mlx->win_ptr, 2, (1L << 0), key_press, (void*)env);
 	mlx_hook(env->mlx->win_ptr, 17, (1L << 17), close_window, (void*)env);
 	mlx_loop_hook(env->mlx->mlx_ptr, update, (void*)env);
