@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/18 21:47:31 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/06 18:03:59 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/07 13:41:37 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_get_next_line.h"
 #include "ft_printf.h"
 
-void	read_player(t_env *env, char *line)
+void		read_player(t_env *env, char *line)
 {
 	int num;
 
@@ -38,7 +38,7 @@ void	read_player(t_env *env, char *line)
 	}
 }
 
-void	read_map(t_map *map)
+void		read_map(t_map *map)
 {
 	char	*line;
 	int		row;
@@ -72,7 +72,22 @@ static void	free_split(char **split)
 	free(split);
 }
 
-void	read_output(t_env *env)
+static void	handle_map_read(t_env *env)
+{
+	char *line;
+	char **split;
+
+	if (env->map)
+		read_map(env->map);
+	else
+	{
+		split = ft_strsplit(line, ' ');
+		env->map = create_map(ft_atoi(split[2]), ft_atoi(split[1]));
+		free_split(split);
+	}
+}
+
+void		read_output(t_env *env)
 {
 	char	**split;
 	char	*line;
@@ -87,16 +102,7 @@ void	read_output(t_env *env)
 		if (ft_strncmp(line, "$$$", 3) == 0)
 			read_player(env, line);
 		if (ft_strncmp(line, "Plateau", 7) == 0)
-		{
-			if (env->map)
-				read_map(env->map);
-			else
-			{
-				split = ft_strsplit(line, ' ');
-				env->map = create_map(ft_atoi(split[2]), ft_atoi(split[1]));
-				free_split(split);
-			}
-		}
+			handle_map_read(env);
 		if (ft_strncmp(line, "Piece", 5) == 0)
 		{
 			free(line);

@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/08/07 13:36:43 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/07 13:37:59 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,10 +49,12 @@ debug:
 	$(CC) -g $(CFLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
 
 clean:
+	@make clean -C libft
 	@printf "Removing objects\n"
 	@rm -f $(OBJS)
 
 fclean : clean
+	@make fclean -C libft
 	@printf "Removing $(NAME)\n"
 	@rm -f $(NAME)
 
