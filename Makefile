@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/07/10 16:37:05 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/07 13:36:43 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,15 +40,13 @@ CC=clang
 
 all: $(NAME)
 
-$(NAME): libft
+$(NAME):
+	make -C libft
 	$(CC) $(CFLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm -O2
 
-debug: libft
+debug:
 	make -C libft
 	$(CC) -g $(CFLAGS) -DBUFFSIZE1 -o $(NAME) -I$(INCL) -I $(LIBFT)/includes $(SRCS) -L$(LIBFT) -lft -lm
-
-libft:
-	make -C libft
 
 clean:
 	@printf "Removing objects\n"
