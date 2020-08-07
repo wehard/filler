@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:18:45 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/15 17:57:57 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/07 15:08:24 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,6 @@ typedef struct	s_filler
 	int			opp_start_set;
 	t_map		*map;
 	t_heat_map	*heat_map;
-	int			spider_radius;
-	int			spider_angle;
-	int			spider_spread;
-	int			spider_legs;
 	int			opp_tl;
 	int			opp_tr;
 	int			opp_bl;
@@ -99,8 +95,10 @@ typedef struct	s_search_info
 typedef t_vec2i	(*t_strategy_func)(t_filler *f, t_piece *pc);
 
 void			ft_panic(char *error);
-
+t_filler		*init_filler(void);
+void			destroy_filler(t_filler *filler);
 t_map			*create_map(char *line);
+void			init_map(t_filler *filler, char *line);
 char			**make_area(int width, int height);
 void			populate_area(char **area, int width, int height,
 	int line_offset);

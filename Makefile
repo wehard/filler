@@ -6,13 +6,14 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/08/07 13:37:59 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/07 15:04:10 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wkorande.filler
 
 SRC = main.c\
+	filler.c\
 	area.c\
 	debug.c\
 	map.c\

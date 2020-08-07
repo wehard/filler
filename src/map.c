@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:39:22 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/06 17:32:05 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/07 15:12:06 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ t_map	*create_map(char *line)
 	}
 	free(split);
 	return (map);
+}
+
+void	init_map(t_filler *filler, char *line)
+{
+	filler->map = create_map(line);
+	filler->heat_map = create_heat_map(filler->map->width, filler->map->height);
 }
 
 void	read_map_state(t_map *map)

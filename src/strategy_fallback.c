@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:31:57 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/10 15:46:15 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:56:24 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ t_vec2i	strategy_fallback(t_filler *filler, t_piece *piece)
 		}
 		cur.y++;
 	}
-	return (ft_make_vec2i(-99, -99));
+	return (ft_make_vec2i(0, 0));
 }
