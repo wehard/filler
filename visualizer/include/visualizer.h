@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:50:07 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/18 22:10:07 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/07 13:32:32 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				close_window(void *param);
 t_mlx_img		*create_mlx_image(t_env *env, int width, int height);
 void			put_pixel_mlx_img(t_mlx_img *img, int x, int y, int c);
 
-t_map 			*create_map(int width, int height);
+t_map			*create_map(int width, int height);
 
 void			read_player(t_env *env, char *line);
 void			read_map(t_map *map);
