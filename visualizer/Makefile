@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 13:58:13 by wkorande          #+#    #+#              #
-#    Updated: 2020/07/18 22:01:49 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/06 20:42:06 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ INCL = include
 
 LIBFT= ../libft
 
-FLAGS= #-Wall -Wextra -Werror
+FLAGS= -Wall -Wextra -Werror
 
 CC=clang
 

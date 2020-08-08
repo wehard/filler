@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 17:31:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/07/10 15:42:38 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/08 08:53:28 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ t_vec2i	get_player_last_pos(char player, t_filler *filler)
 		cur.x = 0;
 		while (cur.x < filler->map->width)
 		{
-			if (filler->map->data[cur.y][cur.x] == (char)ft_tolower(player))
+			if (filler->map->data[cur.y][cur.x] == player)
 				return (cur);
 			cur.x++;
 		}
 		cur.y++;
 	}
-	debug_log("no last for %c found!\n", player);
 	return (get_player_start(player, filler));
 }
 
