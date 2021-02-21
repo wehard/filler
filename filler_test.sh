@@ -13,7 +13,7 @@ OPP_FOLDER="./resources/players/linux/"
 OPPS=$2
 
 if [ $# -ne 3 ]; then
-	echo "./test [player] [opp/*.filler] [map/*]"
+	echo "./filler_test [player] [opp/*.filler] [map/*]"
 	exit 1
 fi
 
